@@ -42,12 +42,8 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
       await new Promise(resolve => setTimeout(resolve, 1000))
       
       // 跳转回ved-indicator页面，并带上登录状态
-      if (!process.env.NEXT_PUBLIC_VED_INDICATOR_URL) {
-        console.error('环境变量NEXT_PUBLIC_VED_INDICATOR_URL未设置')
-        setError("系统配置错误，请联系管理员")
-        return
-      }
-      window.location.href = `${process.env.NEXT_PUBLIC_VED_INDICATOR_URL}?login=success`
+      const vedIndicatorUrl = process.env.NEXT_PUBLIC_VED_INDICATOR_URL || "http://localhost:3000";
+      window.location.href = `${vedIndicatorUrl}?login=success`
     } catch (error) {
       console.error('Login failed:', error)
       setError(error instanceof Error ? error.message : "登录失败，请稍后再试")
