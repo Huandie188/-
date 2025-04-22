@@ -1,6 +1,7 @@
 {
   "name": "ved-indicator",
   "framework": "nextjs",
+  "installCommand": "pnpm install --no-frozen-lockfile",
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
   ],
