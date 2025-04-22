@@ -64,7 +64,7 @@ export default function Dashboard() {
               </svg>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">3,847</div>
+              <div className="text-2xl font-bold">30764</div>
               <p className="text-xs text-muted-foreground">较上月增加187门</p>
             </CardContent>
           </Card>
