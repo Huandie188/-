@@ -1,5 +1,5 @@
 {
-  "name": "ved-indicator",
+  "name": "login",
   "framework": "nextjs",
   "installCommand": "pnpm install --no-frozen-lockfile",
   "rewrites": [
