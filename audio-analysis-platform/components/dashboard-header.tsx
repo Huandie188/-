@@ -1,4 +1,4 @@
-import { Bell, Search, Sparkles } from "lucide-react"
+import { Bell, Search, Sparkles, ArrowLeft } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,14 +11,23 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ModeToggle } from "@/components/mode-toggle"
+import Link from "next/link"
 
 export function DashboardHeader() {
   return (
     <div className="fixed top-0 left-0 right-0 z-50 border-b bg-gradient-to-r from-blue-700 to-purple-600 shadow-md">
       <div className="flex h-16 items-center px-4">
-        <div className="flex items-center space-x-2 text-white">
-          <Sparkles className="h-5 w-5 text-yellow-300" />
-          <span className="text-lg font-semibold">教育生态优化系统</span>
+        <div className="flex items-center space-x-4">
+          <Link href={process.env.NEXT_PUBLIC_VED_INDICATOR_URL || "/"}>
+            <Button variant="ghost" className="mr-2 text-white hover:bg-white/20 hover:text-white flex items-center space-x-1">
+              <ArrowLeft className="h-5 w-5" />
+              <span className="text-sm font-medium">返回主系统</span>
+            </Button>
+          </Link>
+          <div className="flex items-center space-x-2 text-white">
+            <Sparkles className="h-5 w-5 text-yellow-300" />
+            <span className="text-lg font-semibold">教育生态优化系统</span>
+          </div>
         </div>
         <div className="ml-auto flex items-center space-x-4">
           <div className="relative">
