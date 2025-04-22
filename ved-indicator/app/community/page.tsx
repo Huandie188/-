@@ -8,13 +8,15 @@ import {
   Filter, Sparkles, MessageSquare, Clock, 
   TrendingUp, Zap, UserPlus, GitBranch,
   PlusCircle, Compass, Award, FileText,
-  BrainCircuit, Trophy, BookOpen, Rocket
+  BrainCircuit, Trophy, BookOpen, Rocket,
+  Loader2, AlertCircle
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 
 export default function CommunityPage() {
   const [theme, setTheme] = useState<"light" | "dark">("light")
@@ -22,6 +24,8 @@ export default function CommunityPage() {
   const [zoomLevel, setZoomLevel] = useState<"macro" | "meso" | "micro">("meso")
   const [activeNetwork, setActiveNetwork] = useState<"academic" | "professional" | "social">("academic")
   const [activeTab, setActiveTab] = useState("teams")
+  const [isMatchingOpen, setIsMatchingOpen] = useState(false)
+  const [matchingStatus, setMatchingStatus] = useState<"matching" | "notFound" | "">("")
   
   // 模拟加载效果
   useEffect(() => {
@@ -34,6 +38,23 @@ export default function CommunityPage() {
   
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light")
+  }
+  
+  // 处理匹配功能
+  const handleStartMatching = () => {
+    setIsMatchingOpen(true)
+    setMatchingStatus("matching")
+    
+    // 3秒后显示未找到匹配的结果
+    setTimeout(() => {
+      setMatchingStatus("notFound")
+    }, 3000)
+  }
+  
+  // 关闭匹配对话框
+  const handleCloseMatching = () => {
+    setIsMatchingOpen(false)
+    setMatchingStatus("")
   }
   
   return (
@@ -176,10 +197,50 @@ export default function CommunityPage() {
                       </div>
                       
                       {/* 匹配按钮 */}
-                      <Button className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 border-0">
+                      <Button 
+                        className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 border-0"
+                        onClick={handleStartMatching}
+                      >
                         <Sparkles className="mr-2 h-4 w-4" />
                         开始智能匹配
                       </Button>
+                      
+                      {/* 匹配状态对话框 */}
+                      <Dialog open={isMatchingOpen} onOpenChange={handleCloseMatching}>
+                        <DialogContent className="bg-[#0A0D28] border border-[#1E2448] text-white sm:max-w-md">
+                          <DialogHeader>
+                            <DialogTitle className="text-center text-gray-100">
+                              {matchingStatus === "matching" ? "正在匹配学习伙伴" : "匹配结果"}
+                            </DialogTitle>
+                            <DialogDescription className="text-center text-gray-400">
+                              {matchingStatus === "matching" ? 
+                                "AI正在分析您的学习偏好和目标，寻找最佳匹配..." : 
+                                "很抱歉，我们暂时没有找到合适的匹配结果"
+                              }
+                            </DialogDescription>
+                          </DialogHeader>
+                          
+                          <div className="flex flex-col items-center justify-center py-6">
+                            {matchingStatus === "matching" ? (
+                              <div className="flex flex-col items-center">
+                                <Loader2 className="h-12 w-12 text-blue-400 animate-spin mb-4" />
+                                <p className="text-gray-300 text-sm">正在全网匹配志同道合的学习伙伴...</p>
+                              </div>
+                            ) : (
+                              <div className="flex flex-col items-center">
+                                <AlertCircle className="h-12 w-12 text-amber-400 mb-4" />
+                                <p className="text-gray-300 text-sm">暂时没有找到志同道合的伙伴，请稍候再试</p>
+                                <Button 
+                                  className="mt-6 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700"
+                                  onClick={handleCloseMatching}
+                                >
+                                  知道了
+                                </Button>
+                              </div>
+                            )}
+                          </div>
+                        </DialogContent>
+                      </Dialog>
                     </div>
                   </Card>
                   

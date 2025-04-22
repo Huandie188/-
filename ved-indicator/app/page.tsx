@@ -167,14 +167,18 @@ export default function Home() {
                     </div>
                     
                     <div className="flex flex-wrap gap-4 mt-4">
-                      <Button size="lg" className="rounded-full px-6 gap-2 bg-primary hover:bg-primary-600 group relative overflow-hidden">
-                        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary-400 to-blue-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
-                        开始探索 
-                        <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
-                      </Button>
-                      <Button size="lg" variant="outline" className="rounded-full px-6 border-gray-300 dark:border-gray-700 shadow-sm">
-                        了解更多
-                      </Button>
+                      <Link href="/courses">
+                        <Button size="lg" className="rounded-full px-6 gap-2 bg-primary hover:bg-primary-600 group relative overflow-hidden">
+                          <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-primary-400 to-blue-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
+                          开始探索 
+                          <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
+                        </Button>
+                      </Link>
+                      <Link href="/contact">
+                        <Button size="lg" variant="outline" className="rounded-full px-6 border-gray-300 dark:border-gray-700 shadow-sm">
+                          联系我们
+                        </Button>
+                      </Link>
                     </div>
                     
                     <div className="grid grid-cols-3 gap-4 md:gap-8 pt-6">
@@ -476,7 +480,7 @@ export default function Home() {
                         </div>
                       </div>
                       
-                      <Link href={i === 0 ? "/courses/ai-intro" : `/courses/course-${i+1}`}>
+                      <Link href={i === 0 ? "/courses/ai-intro" : i === 1 ? "/courses/data-viz" : "/courses/web-dev"}>
                         <Button className={`w-full rounded-full bg-gradient-to-r ${course.color} text-white border-0 shadow-md hover:shadow-lg transition-shadow`}>
                           查看详情
                         </Button>

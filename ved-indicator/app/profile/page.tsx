@@ -276,7 +276,6 @@ export default function ProfilePage() {
                           </div>
                           <h3 className="text-base font-medium mb-1">{course.title}</h3>
                           <p className="text-sm text-muted-foreground mb-4">{course.platform}</p>
-                          <Button className="w-full">查看详情</Button>
                         </CardContent>
                       </Card>
                     ))}
@@ -316,7 +315,6 @@ export default function ProfilePage() {
                           <h3 className="text-base font-medium mb-1">{course.title}</h3>
                           <p className="text-sm text-muted-foreground mb-1">{course.platform}</p>
                           <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium mb-4">{course.trend}</p>
-                          <Button className="w-full">查看详情</Button>
                         </CardContent>
                       </Card>
                     ))}
@@ -361,7 +359,6 @@ export default function ProfilePage() {
                           <h3 className="text-base font-medium mb-1">{course.title}</h3>
                           <p className="text-sm text-muted-foreground mb-1">{course.platform}</p>
                           <p className="text-xs text-blue-600 dark:text-blue-400 font-medium mb-4">{course.learners}</p>
-                          <Button className="w-full">查看详情</Button>
                         </CardContent>
                       </Card>
                     ))}

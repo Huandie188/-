@@ -595,6 +595,149 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
         { id: "mobile-dev", title: "移动应用开发", provider: "加州大学伯克利分校", level: 4 }
       ]
     },
+    "java-dev": {
+      id: "java-dev",
+      title: "Java企业级应用开发",
+      provider: "极客时间",
+      instructor: "王刚教授",
+      level: 4,
+      updatedAt: "1周前",
+      responseRate: "24小时内",
+      trend: "+72%",
+      heat: 90,
+      tags: ["Java", "Spring Boot", "微服务", "数据库"],
+      description: "本课程深入讲解Java企业级应用开发技术栈，从Java基础到Spring生态，从单体架构到微服务架构。通过实际项目案例，掌握企业级应用设计、开发与部署的全流程，成为优秀的Java开发工程师。",
+      longDescription: "Java企业级应用开发是当今IT行业最稳定且高薪的技术领域之一。本课程由资深Java架构师精心设计，结合实际企业项目经验，全面讲解Java企业级应用开发技术栈。\n\n课程从Java核心基础开始，逐步深入Spring生态系统，重点讲解Spring Boot、Spring Cloud微服务架构，以及DevOps与容器化部署。通过真实项目实践，培养学员解决复杂业务问题的能力。\n\n通过本课程，你将能够：\n- 掌握Java高级特性与设计模式\n- 熟练应用Spring Boot开发企业应用\n- 理解微服务架构原理与实现方法\n- 设计高性能、高可用的分布式系统\n- 实现CI/CD自动化部署流程\n- 解决企业应用开发中的常见挑战\n\n课程适合有一定Java基础的开发者，我们提供完整的学习资源与代码库，确保学员能够充分理解并应用所学知识。",
+      duration: "10周",
+      totalHours: 50,
+      status: "热门推荐",
+      statusColor: "red",
+      imageSrc: "/course-images/java-enterprise.jpg",
+      rarityLevel: "中",
+      popularity: "90%",
+      learningPath: ["Java核心", "Spring基础", "企业应用开发", "微服务架构"],
+      prerequisites: ["Java基础", "面向对象编程概念"],
+      syllabus: [
+        {
+          title: "第1周：Java高级特性",
+          lessons: [
+            { title: "1.1 Java 8+ 新特性详解", duration: "60分钟", type: "视频" },
+            { title: "1.2 函数式编程与Stream API", duration: "55分钟", type: "视频" },
+            { title: "1.3 并发编程基础", duration: "65分钟", type: "视频" },
+            { title: "实战练习：函数式编程实战", duration: "90分钟", type: "实验" }
+          ]
+        },
+        {
+          title: "第2周：设计模式与架构",
+          lessons: [
+            { title: "2.1 常用设计模式", duration: "70分钟", type: "视频" },
+            { title: "2.2 架构设计原则", duration: "60分钟", type: "视频" },
+            { title: "2.3 代码重构与优化", duration: "55分钟", type: "视频" },
+            { title: "实战练习：重构遗留代码", duration: "85分钟", type: "实验" }
+          ]
+        },
+        {
+          title: "第3周：Spring核心",
+          lessons: [
+            { title: "3.1 Spring IoC容器详解", duration: "65分钟", type: "视频" },
+            { title: "3.2 AOP编程模型", duration: "60分钟", type: "视频" },
+            { title: "3.3 事务管理机制", duration: "55分钟", type: "视频" },
+            { title: "实战练习：构建Spring应用", duration: "95分钟", type: "实验" }
+          ]
+        },
+        {
+          title: "第4周：Spring Boot开发",
+          lessons: [
+            { title: "4.1 Spring Boot核心功能", duration: "60分钟", type: "视频" },
+            { title: "4.2 自动配置原理", duration: "55分钟", type: "视频" },
+            { title: "4.3 REST API设计与实现", duration: "65分钟", type: "视频" },
+            { title: "实战练习：开发RESTful服务", duration: "100分钟", type: "实验" }
+          ]
+        },
+        {
+          title: "第5周：数据访问层",
+          lessons: [
+            { title: "5.1 JPA与Hibernate", duration: "65分钟", type: "视频" },
+            { title: "5.2 MyBatis高级应用", duration: "60分钟", type: "视频" },
+            { title: "5.3 数据库性能优化", duration: "70分钟", type: "视频" },
+            { title: "实战练习：复杂查询实现", duration: "90分钟", type: "实验" }
+          ]
+        },
+        {
+          title: "第6周：微服务架构",
+          lessons: [
+            { title: "6.1 微服务设计原则", duration: "55分钟", type: "视频" },
+            { title: "6.2 Spring Cloud概述", duration: "65分钟", type: "视频" },
+            { title: "6.3 服务注册与发现", duration: "60分钟", type: "视频" },
+            { title: "实战练习：拆分单体应用", duration: "105分钟", type: "实验" }
+          ]
+        },
+        {
+          title: "第7周：微服务通信",
+          lessons: [
+            { title: "7.1 同步通信：Feign", duration: "50分钟", type: "视频" },
+            { title: "7.2 异步通信：消息队列", duration: "65分钟", type: "视频" },
+            { title: "7.3 API网关设计", duration: "60分钟", type: "视频" },
+            { title: "实战练习：构建微服务网关", duration: "95分钟", type: "实验" }
+          ]
+        },
+        {
+          title: "第8周：服务容错与监控",
+          lessons: [
+            { title: "8.1 熔断与限流实现", duration: "60分钟", type: "视频" },
+            { title: "8.2 分布式链路追踪", duration: "65分钟", type: "视频" },
+            { title: "8.3 监控告警系统", duration: "55分钟", type: "视频" },
+            { title: "实战练习：高可用系统设计", duration: "100分钟", type: "实验" }
+          ]
+        },
+        {
+          title: "第9周：容器化与部署",
+          lessons: [
+            { title: "9.1 Docker基础与应用", duration: "70分钟", type: "视频" },
+            { title: "9.2 Kubernetes入门", duration: "75分钟", type: "视频" },
+            { title: "9.3 CI/CD流水线", duration: "65分钟", type: "视频" },
+            { title: "实战练习：容器化部署", duration: "110分钟", type: "实验" }
+          ]
+        },
+        {
+          title: "第10周：综合实战项目",
+          lessons: [
+            { title: "10.1 项目需求分析", duration: "45分钟", type: "视频" },
+            { title: "10.2 架构设计与实现", duration: "75分钟", type: "视频" },
+            { title: "10.3 测试与部署", duration: "65分钟", type: "视频" },
+            { title: "综合项目：企业级应用开发", duration: "150分钟", type: "实验" }
+          ]
+        }
+      ],
+      reviews: [
+        {
+          user: "张明",
+          avatar: "/avatars/user5.jpg",
+          rating: 5,
+          date: "2024-01-10",
+          content: "这是我学过的最实用的Java课程！通过系统学习，我成功从初级开发晋升为技术主管。课程内容紧跟企业需求，实战项目非常贴近实际工作场景。"
+        },
+        {
+          user: "王丽",
+          avatar: "/avatars/user6.jpg",
+          rating: 4,
+          date: "2024-02-15",
+          content: "课程质量很高，尤其是微服务部分讲解得非常透彻。唯一的小遗憾是云原生部分内容相对较少。总体来说，非常推荐想进入企业级开发的同学学习！"
+        },
+        {
+          user: "李强",
+          avatar: "/avatars/user7.jpg",
+          rating: 5,
+          date: "2024-03-05",
+          content: "作为一名有3年经验的Java开发，这门课程帮助我填补了知识空缺，特别是在架构设计方面。现在我能够独立负责复杂项目的架构设计，薪资也提升了30%。"
+        }
+      ],
+      relatedCourses: [
+        { id: "web-dev", title: "Web全栈开发", provider: "加州大学伯克利分校", level: 4 },
+        { id: "data-viz", title: "数据分析与可视化", provider: "麻省理工学院", level: 3 },
+        { id: "ai-intro", title: "人工智能导论", provider: "斯坦福大学", level: 3 }
+      ]
+    },
     // 默认课程数据（原有的示例课程）
     "default": {
       id: params.id,
@@ -680,9 +823,9 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
         }
       ],
       relatedCourses: [
-        { id: "course2", title: "自然语言处理实战", provider: "极客时间", level: 3 },
-        { id: "course3", title: "Python人工智能应用", provider: "网易云课堂", level: 2 },
-        { id: "course4", title: "多模态深度学习", provider: "深蓝学院", level: 4 }
+        { id: "ai-intro", title: "人工智能导论", provider: "斯坦福大学", level: 3 },
+        { id: "data-viz", title: "数据分析与可视化", provider: "麻省理工学院", level: 3 },
+        { id: "web-dev", title: "Web全栈开发", provider: "加州大学伯克利分校", level: 4 }
       ]
     }
   }
@@ -804,7 +947,7 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
                 
                 <div className="aspect-video w-full rounded-lg bg-gray-100 dark:bg-gray-800 overflow-hidden relative">
                   <img 
-                    src={params.id === "ai-intro" ? "/course-images/ai-intro.jpg" : "/placeholder-course.jpg"} 
+                    src={courseData.imageSrc || "/placeholder-course.jpg"} 
                     alt={courseData.title}
                     className="w-full h-full object-cover"
                   />

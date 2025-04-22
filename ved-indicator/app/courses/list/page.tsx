@@ -36,7 +36,7 @@ export default function CoursesListPage() {
   // 模拟课程数据
   const courses = [
     {
-      id: "1",
+      id: "web-dev",
       title: "Web前端开发实战",
       provider: "慕课网",
       instructor: "李明",
@@ -51,7 +51,7 @@ export default function CoursesListPage() {
       image: "/course-images/web-development.jpg"
     },
     {
-      id: "2",
+      id: "data-viz",
       title: "Python数据分析入门到精通",
       provider: "网易云课堂",
       instructor: "张伟",
@@ -66,7 +66,7 @@ export default function CoursesListPage() {
       image: "/course-images/python-data.jpg"
     },
     {
-      id: "3",
+      id: "ai-intro",
       title: "深度学习与人工智能",
       provider: "Coursera",
       instructor: "Andrew Ng",
@@ -81,7 +81,7 @@ export default function CoursesListPage() {
       image: "/course-images/deep-learning.jpg"
     },
     {
-      id: "4",
+      id: "java-dev",
       title: "Java企业级应用开发",
       provider: "极客时间",
       instructor: "王刚",
