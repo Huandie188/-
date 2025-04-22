@@ -414,15 +414,19 @@ export default function CoursesPage() {
           </Link>
           
           <nav className="hidden md:flex items-center space-x-8 text-sm font-medium flex-1 justify-center">
-            <Link href={process.env.NEXT_PUBLIC_COURSE_RECOMMENDATION_URL || 'http://localhost:3001'} className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
-              AI课程推荐
-            </Link>
+            {process.env.NEXT_PUBLIC_COURSE_RECOMMENDATION_URL ? (
+              <Link href={process.env.NEXT_PUBLIC_COURSE_RECOMMENDATION_URL} className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
+                AI课程推荐
+              </Link>
+            ) : null}
             <Link href="/courses" className="transition-colors text-primary-600 py-1 border-b-2 border-primary-500">
               在线课程
             </Link>
-            <Link href={process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL || 'http://localhost:3004'} className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
-              个人学习路线
-            </Link>
+            {process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL ? (
+              <Link href={process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL} className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
+                个人学习路线
+              </Link>
+            ) : null}
             <Link href="/profile" className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
               个人信息
             </Link>

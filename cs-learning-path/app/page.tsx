@@ -10,14 +10,24 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="fixed top-20 left-8 z-[99999]">
-        <Link href={process.env.NEXT_PUBLIC_VED_INDICATOR_URL || "http://localhost:3000"}>
+        {process.env.NEXT_PUBLIC_VED_INDICATOR_URL ? (
+          <Link href={process.env.NEXT_PUBLIC_VED_INDICATOR_URL}>
+            <button 
+              className="p-3 bg-blue-600 hover:bg-blue-700 rounded-full backdrop-blur-sm transition-colors shadow-xl border-2 border-white/20 animate-pulse"
+              aria-label="返回主页"
+            >
+              <ArrowLeft className="w-5 h-5 text-white" />
+            </button>
+          </Link>
+        ) : (
           <button 
             className="p-3 bg-blue-600 hover:bg-blue-700 rounded-full backdrop-blur-sm transition-colors shadow-xl border-2 border-white/20 animate-pulse"
             aria-label="返回主页"
+            onClick={() => window.history.back()}
           >
             <ArrowLeft className="w-5 h-5 text-white" />
           </button>
-        </Link>
+        )}
       </div>
       
       <Header />

@@ -32,13 +32,21 @@ export function AppSidebar() {
     // 清除登录状态
     localStorage.removeItem('isLoggedIn')
     // 跳转到登录页面
-    window.location.href = process.env.NEXT_PUBLIC_LOGIN_URL || 'http://localhost:3001'
+    if (!process.env.NEXT_PUBLIC_LOGIN_URL) {
+      console.error('环境变量NEXT_PUBLIC_LOGIN_URL未设置')
+      alert('系统配置错误，请联系管理员')
+      return
+    }
+    window.location.href = process.env.NEXT_PUBLIC_LOGIN_URL
   }
 
   return (
     <Sidebar className="fixed left-0 top-0 bottom-0 z-[60]">
       <SidebarHeader className="py-4">
-        <Link href={process.env.NEXT_PUBLIC_VED_INDICATOR_URL || 'http://localhost:3000'} className="flex items-center gap-2 px-4">
+        <Link 
+          href={process.env.NEXT_PUBLIC_VED_INDICATOR_URL ? process.env.NEXT_PUBLIC_VED_INDICATOR_URL : "/"}
+          className="flex items-center gap-2 px-4"
+        >
           <Image src="/5.png" alt="Logo" width={36} height={36} className="h-9 w-9" />
           <span className="text-xl font-bold bg-gradient-to-r from-blue-700 to-purple-600 bg-clip-text text-transparent">
             EduFusion

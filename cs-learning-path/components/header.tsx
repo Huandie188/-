@@ -14,12 +14,21 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
       <div className="openai-container flex h-16 items-center justify-between">
         <div className="flex items-center gap-3">
-          <Link href={process.env.NEXT_PUBLIC_VED_INDICATOR_URL || 'http://localhost:3000'} className="flex items-center gap-2">
-            <Image src="/5.png" alt="EduFusion" width={32} height={32} className="h-8 w-8" />
-            <span className="text-xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 hidden sm:inline-block">
-              EduFusion
-            </span>
-          </Link>
+          {process.env.NEXT_PUBLIC_VED_INDICATOR_URL ? (
+            <Link href={process.env.NEXT_PUBLIC_VED_INDICATOR_URL} className="flex items-center gap-2">
+              <Image src="/5.png" alt="EduFusion" width={32} height={32} className="h-8 w-8" />
+              <span className="text-xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 hidden sm:inline-block">
+                EduFusion
+              </span>
+            </Link>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Image src="/5.png" alt="EduFusion" width={32} height={32} className="h-8 w-8" />
+              <span className="text-xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 hidden sm:inline-block">
+                EduFusion
+              </span>
+            </div>
+          )}
           
           {/* 移除了导航栏中的三个按钮 */}
         </div>
@@ -35,10 +44,17 @@ export default function Header() {
             </SheetTrigger>
             <SheetContent side="left" className="w-[300px] sm:w-[400px]">
               <div className="py-4">
-                <Link href={process.env.NEXT_PUBLIC_VED_INDICATOR_URL || 'http://localhost:3000'} className="flex items-center gap-2 mb-6">
-                  <Image src="/5.png" alt="EduFusion" width={32} height={32} className="h-8 w-8" />
-                  <span className="text-xl font-semibold">EduFusion</span>
-                </Link>
+                {process.env.NEXT_PUBLIC_VED_INDICATOR_URL ? (
+                  <Link href={process.env.NEXT_PUBLIC_VED_INDICATOR_URL} className="flex items-center gap-2 mb-6">
+                    <Image src="/5.png" alt="EduFusion" width={32} height={32} className="h-8 w-8" />
+                    <span className="text-xl font-semibold">EduFusion</span>
+                  </Link>
+                ) : (
+                  <div className="flex items-center gap-2 mb-6">
+                    <Image src="/5.png" alt="EduFusion" width={32} height={32} className="h-8 w-8" />
+                    <span className="text-xl font-semibold">EduFusion</span>
+                  </div>
+                )}
                 <div className="space-y-1">
                   {[
                     { title: "设置", href: "/settings" },

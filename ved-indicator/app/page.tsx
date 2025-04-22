@@ -82,15 +82,19 @@ export default function Home() {
             <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-green-500 bg-clip-text text-transparent">EduFusion</span>
           </Link>
           <nav className="hidden md:flex items-center space-x-8 text-sm font-medium flex-1 justify-center">
-            <Link href={process.env.NEXT_PUBLIC_COURSE_RECOMMENDATION_URL || 'http://localhost:3001'} className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
-              AI课程推荐
-            </Link>
+            {process.env.NEXT_PUBLIC_COURSE_RECOMMENDATION_URL ? (
+              <Link href={process.env.NEXT_PUBLIC_COURSE_RECOMMENDATION_URL} className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
+                AI课程推荐
+              </Link>
+            ) : null}
             <Link href="/courses" className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
               在线课程
             </Link>
-            <Link href={process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL || 'http://localhost:3004'} className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
-              个人学习路线
-            </Link>
+            {process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL ? (
+              <Link href={process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL} className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
+                个人学习路线
+              </Link>
+            ) : null}
             <Link href="/profile" className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
               个人信息
             </Link>
@@ -102,7 +106,7 @@ export default function Home() {
             {!isLoading && (
               isLoggedIn ? (
                 <>
-                  <Link href={process.env.NEXT_PUBLIC_ADMIN_URL || ''}>
+                  <Link href={process.env.NEXT_PUBLIC_ADMIN_URL || '#'}>
                     <Button variant="ghost" className="rounded-full hover:bg-primary-50 text-primary-700">后台管理</Button>
                   </Link>
                   <Button variant="outline" className="rounded-full" onClick={() => setLoggedIn(false)}>
@@ -110,7 +114,7 @@ export default function Home() {
                   </Button>
                 </>
               ) : (
-                <Link href={process.env.NEXT_PUBLIC_AUTH_URL || ''}>
+                <Link href={process.env.NEXT_PUBLIC_AUTH_URL || '#'}>
                   <Button className="rounded-full shadow-subtle">登录/注册</Button>
                 </Link>
               )
@@ -272,13 +276,15 @@ export default function Home() {
                     <p className="text-muted-foreground">
                       基于您的学习历史、兴趣偏好和职业目标，提供精准的课程推荐
                     </p>
-                    <div className="pt-2">
-                      <Link href={process.env.NEXT_PUBLIC_COURSE_RECOMMENDATION_URL || 'http://localhost:3001'}>
-                        <Button variant="ghost" className="px-0 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 hover:bg-transparent group-hover:-translate-y-0.5 transition-transform duration-300">
-                          了解更多 <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-                        </Button>
-                      </Link>
-                    </div>
+                    {process.env.NEXT_PUBLIC_COURSE_RECOMMENDATION_URL ? (
+                      <div className="pt-2">
+                        <Link href={process.env.NEXT_PUBLIC_COURSE_RECOMMENDATION_URL}>
+                          <Button variant="ghost" className="px-0 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 hover:bg-transparent group-hover:-translate-y-0.5 transition-transform duration-300">
+                            了解更多 <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+                          </Button>
+                        </Link>
+                      </div>
+                    ) : null}
                     
                     <div className="absolute top-4 right-4 w-32 h-32 bg-gradient-to-br from-primary-500/5 to-violet-500/5 rounded-full blur-xl"></div>
                   </CardContent>
@@ -300,13 +306,15 @@ export default function Home() {
                     <p className="text-muted-foreground">
                       智能规划学习顺序，从基础到进阶，确保知识体系的完整性和连贯性
                     </p>
-                    <div className="pt-2">
-                      <Link href={process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL || 'http://localhost:3004'}>
-                        <Button variant="ghost" className="px-0 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 hover:bg-transparent group-hover:-translate-y-0.5 transition-transform duration-300">
-                          了解更多 <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-                        </Button>
-                      </Link>
-                    </div>
+                    {process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL ? (
+                      <div className="pt-2">
+                        <Link href={process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL}>
+                          <Button variant="ghost" className="px-0 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 hover:bg-transparent group-hover:-translate-y-0.5 transition-transform duration-300">
+                            探索学习路径 <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+                          </Button>
+                        </Link>
+                      </div>
+                    ) : null}
                     
                     <div className="absolute top-4 right-4 w-32 h-32 bg-gradient-to-br from-violet-500/5 to-blue-500/5 rounded-full blur-xl"></div>
                   </CardContent>
@@ -565,7 +573,7 @@ export default function Home() {
                       </div>
                     </div>
                     
-                    <Link href={process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL || 'http://localhost:3004'}>
+                    <Link href={process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL || '#'}>
                       <Button className="w-full rounded-full bg-gradient-to-r from-blue-500 to-violet-500 text-white border-0 shadow-md hover:shadow-lg transition-shadow">
                         查看所有路径
                       </Button>
@@ -639,11 +647,13 @@ export default function Home() {
             </div>
             
             <div className="text-center pt-8">
-              <Link href={process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL || 'http://localhost:3004'}>
-                <Button variant="outline" className="rounded-full px-6 py-6 text-lg border-blue-800 text-blue-400 hover:bg-blue-900/20 shadow-[0_0_20px_rgba(0,0,255,0.2)] hover:shadow-[0_0_30px_rgba(0,0,255,0.3)] transition-all">
-                  定制我的学习计划 <Sparkles className="ml-2 h-4 w-4 text-amber-500" />
-                </Button>
-              </Link>
+              {process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL ? (
+                <Link href={process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL}>
+                  <Button variant="outline" className="rounded-full px-6 py-6 text-lg border-blue-800 text-blue-400 hover:bg-blue-900/20 shadow-[0_0_20px_rgba(0,0,255,0.2)] hover:shadow-[0_0_30px_rgba(0,0,255,0.3)] transition-all">
+                    定制我的学习计划 <Sparkles className="ml-2 h-4 w-4 text-amber-500" />
+                  </Button>
+                </Link>
+              ) : null}
             </div>
           </div>
         </section>

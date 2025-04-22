@@ -16,7 +16,14 @@ export default function Home() {
           variant="ghost" 
           size="icon" 
           className="rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/30"
-          onClick={() => router.push(process.env.NEXT_PUBLIC_VED_INDICATOR_URL || 'http://localhost:3000')}
+          onClick={() => {
+            if (process.env.NEXT_PUBLIC_VED_INDICATOR_URL) {
+              router.push(process.env.NEXT_PUBLIC_VED_INDICATOR_URL)
+            } else {
+              router.push("/")
+              console.error('环境变量NEXT_PUBLIC_VED_INDICATOR_URL未设置')
+            }
+          }}
         >
           <ArrowLeft className="h-5 w-5 text-blue-600 dark:text-blue-400" />
           <span className="sr-only">返回</span>
