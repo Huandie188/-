@@ -18,10 +18,10 @@ export default function Home() {
           className="rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/30"
           onClick={() => {
             if (process.env.NEXT_PUBLIC_VED_INDICATOR_URL) {
-              router.push(process.env.NEXT_PUBLIC_VED_INDICATOR_URL)
+              window.location.href = process.env.NEXT_PUBLIC_VED_INDICATOR_URL
             } else {
-              router.push("/")
-              console.error('环境变量NEXT_PUBLIC_VED_INDICATOR_URL未设置')
+              window.history.back()
+              console.error('环境变量NEXT_PUBLIC_VED_INDICATOR_URL未设置，使用浏览器返回')
             }
           }}
         >
