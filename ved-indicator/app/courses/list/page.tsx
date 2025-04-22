@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -28,7 +30,7 @@ import {
 } from "lucide-react"
 
 export default function CoursesListPage() {
-  const [theme, setTheme] = React.useState<"light" | "dark">("light")
+  const [theme, setTheme] = React.useState("light")
   const [selectedCourses, setSelectedCourses] = React.useState<string[]>([])
 
   // 模拟课程数据
