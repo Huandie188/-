@@ -42,7 +42,8 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
       setTimeout(() => {
         try {
           // 跳转回ved-indicator页面，并带上登录状态
-          const vedIndicatorUrl = process.env.NEXT_PUBLIC_VED_INDICATOR_URL || "http://localhost:3000";
+          // 使用指定的生产环境URL
+          const vedIndicatorUrl = "https://test-ten-nu-93.vercel.app/";
           window.location.href = `${vedIndicatorUrl}?login=success`;
         } catch (redirectError) {
           console.error('Redirect failed:', redirectError);
