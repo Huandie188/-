@@ -19,6 +19,28 @@
 6. 点击 "Deploy" 按钮部署项目
 7. 部署完成后，您可以在项目的 "Domains" 选项卡中找到您的应用 URL
 
+## API路由
+
+项目包含以下API端点:
+
+- `/api/hello` - 返回一个JSON消息
+
+您可以通过以下方式测试API:
+
+```bash
+curl https://your-app-url.vercel.app/api/hello
+```
+
+## 自定义服务器（可选）
+
+项目包含一个自定义Express服务器配置。在本地开发时可以使用:
+
+```bash
+npm run custom-server
+```
+
+**注意**: Vercel部署时会自动使用内置的Next.js服务器，不需要使用自定义服务器。
+
 ## 注意事项
 
 - 确保您的 Next.js 应用按照 App Router 方式组织 (Next.js 13+)
@@ -44,7 +66,7 @@ npm start
 
 ## 项目结构
 
-- `/app`: 包含应用程序的所有页面组件
+- `/app`: 包含应用程序的所有页面组件和API路由
 - `/components`: 包含可重用的 UI 组件
 - `/hooks`: 包含自定义 React hooks
 - `/lib`: 包含工具函数和库

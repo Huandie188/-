@@ -10,6 +10,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "custom-server": "node server.js",
     "lint": "next lint"
   },
   "dependencies": {
@@ -42,6 +43,7 @@
     "@radix-ui/react-toggle-group": "^1.1.1",
     "@radix-ui/react-tooltip": "^1.1.6",
     "@vercel/analytics": "^1.1.1",
+    "express": "^4.18.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.0.4",
