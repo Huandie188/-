@@ -23,248 +23,23 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { TreeNode } from "@/lib/learning-paths-data"
 
-interface TreeNode {
-  id: string
-  title: string
-  description: string
-  icon: React.ReactNode
-  color: string
-  difficulty: string
-  estimatedTime: string
-  recommendedCourse?: {
-    title: string
-    provider: string
-    url: string
-  }
-  children?: TreeNode[]
-  expanded?: boolean
+interface LearningPathTreeProps {
+  treeData: TreeNode;
 }
 
-export default function LearningPathTree() {
+export default function LearningPathTree({ treeData: initialTreeData }: LearningPathTreeProps) {
   const [viewMode, setViewMode] = useState<"tree" | "flowchart">("tree")
   const flowchartRef = useRef<HTMLDivElement>(null)
   const treeRef = useRef<HTMLDivElement>(null)
   const [scale, setScale] = useState(1)
 
-  const [treeData, setTreeData] = useState<TreeNode>({
-    id: "root",
-    title: "计算机科学",
-    description: "计算机和编程的基础",
-    icon: <Code className="h-5 w-5" />,
-    color: "bg-blue-500",
-    difficulty: "入门",
-    estimatedTime: "4-5年",
-    recommendedCourse: {
-      title: "计算机科学导论",
-      provider: "中国大学MOOC",
-      url: "https://example.com/cs-intro",
-    },
-    expanded: true,
-    children: [
-      {
-        id: "programming-basics",
-        title: "编程基础",
-        description: "学习编程和算法的基础知识",
-        icon: <BookOpen className="h-5 w-5" />,
-        color: "bg-green-500",
-        difficulty: "入门",
-        estimatedTime: "3-6个月",
-        recommendedCourse: {
-          title: "Python编程基础",
-          provider: "网易云课堂",
-          url: "https://example.com/python-basics",
-        },
-        expanded: true,
-        children: [
-          {
-            id: "python",
-            title: "Python编程",
-            description: "以Python作为你的第一门编程语言",
-            icon: <Code className="h-5 w-5" />,
-            color: "bg-yellow-500",
-            difficulty: "入门",
-            estimatedTime: "4-8周",
-            recommendedCourse: {
-              title: "Python零基础入门",
-              provider: "慕课网",
-              url: "https://example.com/python-zero",
-            },
-            children: [],
-          },
-          {
-            id: "data-structures",
-            title: "数据结构",
-            description: "学习数组、链表、栈和队列",
-            icon: <Database className="h-5 w-5" />,
-            color: "bg-purple-500",
-            difficulty: "中级",
-            estimatedTime: "6-10周",
-            recommendedCourse: {
-              title: "数据结构与算法",
-              provider: "学堂在线",
-              url: "https://example.com/data-structures",
-            },
-            children: [],
-          },
-          {
-            id: "algorithms",
-            title: "算法",
-            description: "学习排序、搜索和图算法",
-            icon: <Code className="h-5 w-5" />,
-            color: "bg-pink-500",
-            difficulty: "中级",
-            estimatedTime: "8-12周",
-            recommendedCourse: {
-              title: "算法设计与分析",
-              provider: "Coursera",
-              url: "https://example.com/algorithms",
-            },
-            children: [],
-          },
-        ],
-      },
-      {
-        id: "computer-systems",
-        title: "计算机系统",
-        description: "了解计算机底层工作原理",
-        icon: <Server className="h-5 w-5" />,
-        color: "bg-orange-500",
-        difficulty: "中级",
-        estimatedTime: "6-9个月",
-        recommendedCourse: {
-          title: "计算机系统原理",
-          provider: "中国大学MOOC",
-          url: "https://example.com/computer-systems",
-        },
-        expanded: true,
-        children: [
-          {
-            id: "computer-architecture",
-            title: "计算机架构",
-            description: "学习CPU、内存和系统设计",
-            icon: <Server className="h-5 w-5" />,
-            color: "bg-red-500",
-            difficulty: "中级",
-            estimatedTime: "8-12周",
-            recommendedCourse: {
-              title: "计算机组成原理",
-              provider: "哈尔滨工业大学MOOC",
-              url: "https://example.com/computer-architecture",
-            },
-            children: [],
-          },
-          {
-            id: "operating-systems",
-            title: "操作系统",
-            description: "学习进程管理、内存和文件系统",
-            icon: <Server className="h-5 w-5" />,
-            color: "bg-blue-600",
-            difficulty: "高级",
-            estimatedTime: "10-14周",
-            recommendedCourse: {
-              title: "操作系统原理与实践",
-              provider: "清华大学MOOC",
-              url: "https://example.com/operating-systems",
-            },
-            children: [],
-          },
-        ],
-      },
-      {
-        id: "web-development",
-        title: "Web开发",
-        description: "构建网站和Web应用",
-        icon: <Globe className="h-5 w-5" />,
-        color: "bg-cyan-500",
-        difficulty: "中级",
-        estimatedTime: "8-12个月",
-        recommendedCourse: {
-          title: "全栈Web开发",
-          provider: "腾讯课堂",
-          url: "https://example.com/web-dev",
-        },
-        children: [
-          {
-            id: "frontend",
-            title: "前端开发",
-            description: "学习HTML、CSS和JavaScript",
-            icon: <Globe className="h-5 w-5" />,
-            color: "bg-indigo-500",
-            difficulty: "入门",
-            estimatedTime: "8-12周",
-            recommendedCourse: {
-              title: "前端开发入门到精通",
-              provider: "极客时间",
-              url: "https://example.com/frontend",
-            },
-            children: [],
-          },
-          {
-            id: "backend",
-            title: "后端开发",
-            description: "学习服务器端编程和数据库",
-            icon: <Database className="h-5 w-5" />,
-            color: "bg-emerald-500",
-            difficulty: "中级",
-            estimatedTime: "10-14周",
-            recommendedCourse: {
-              title: "Node.js后端开发实战",
-              provider: "慕课网",
-              url: "https://example.com/backend",
-            },
-            children: [],
-          },
-        ],
-      },
-      {
-        id: "advanced-topics",
-        title: "高级主题",
-        description: "计算机科学的专业领域",
-        icon: <Brain className="h-5 w-5" />,
-        color: "bg-violet-500",
-        difficulty: "高级",
-        estimatedTime: "1-2年",
-        recommendedCourse: {
-          title: "计算机科学前沿技术",
-          provider: "Coursera",
-          url: "https://example.com/advanced-cs",
-        },
-        children: [
-          {
-            id: "ai-ml",
-            title: "人工智能与机器学习",
-            description: "学习人工智能和机器学习",
-            icon: <Brain className="h-5 w-5" />,
-            color: "bg-fuchsia-500",
-            difficulty: "高级",
-            estimatedTime: "6-12个月",
-            recommendedCourse: {
-              title: "机器学习与深度学习实战",
-              provider: "吴恩达课程",
-              url: "https://example.com/ai-ml",
-            },
-            children: [],
-          },
-          {
-            id: "cybersecurity",
-            title: "网络安全",
-            description: "学习安全原则和实践",
-            icon: <Shield className="h-5 w-5" />,
-            color: "bg-slate-700",
-            difficulty: "高级",
-            estimatedTime: "6-12个月",
-            recommendedCourse: {
-              title: "网络安全与渗透测试",
-              provider: "黑马程序员",
-              url: "https://example.com/cybersecurity",
-            },
-            children: [],
-          },
-        ],
-      },
-    ],
-  })
+  const [treeData, setTreeData] = useState<TreeNode>(initialTreeData);
+
+  useEffect(() => {
+    setTreeData(initialTreeData);
+  }, [initialTreeData]);
 
   // 重置缩放比例当视图模式改变时
   useEffect(() => {
@@ -276,14 +51,12 @@ export default function LearningPathTree() {
       if (node.id === nodeId) {
         return { ...node, expanded: !node.expanded }
       }
-
       if (node.children) {
         return {
           ...node,
-          children: node.children.map(toggleExpanded),
+          children: node.children.map(toggleExpanded)
         }
       }
-
       return node
     }
 

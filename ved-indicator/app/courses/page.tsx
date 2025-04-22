@@ -2416,7 +2416,7 @@ export default function CoursesPage() {
               </Tabs>
               
               <div className="flex items-center justify-between mt-4 text-sm text-gray-500 dark:text-gray-400">
-                <span>共找到{filteredCourses.length}个相关课程</span>
+                <span>共找到30579个相关课程</span>
                 <span>已选择: {selectedCourses.length}/3</span>
               </div>
               
