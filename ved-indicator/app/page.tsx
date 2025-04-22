@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import { ArrowRight, BookOpen, GraduationCap, Book, Users, Lightbulb, Sparkles, ArrowLeft, Clock, Star, FileText } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -12,11 +12,11 @@ import { Badge } from "@/components/ui/badge"
 import CourseCarousel from "@/components/CourseCarousel"
 import MapParticles from "@/components/MapParticles"
 
-export default function Home() {
-  const { isLoggedIn, setLoggedIn } = useAuth()
+// 创建一个客户端组件来使用 useSearchParams
+function SearchParamsHandler() {
+  const { setLoggedIn } = useAuth()
   const searchParams = useSearchParams()
-  const [isLoading, setIsLoading] = useState(true)
-
+  
   useEffect(() => {
     const loginStatus = searchParams.get('login')
     if (loginStatus === 'success') {
@@ -24,11 +24,21 @@ export default function Home() {
       // 清除URL参数
       window.history.replaceState({}, '', '/')
     }
+  }, [searchParams, setLoggedIn])
+  
+  return null
+}
+
+export default function Home() {
+  const { isLoggedIn, setLoggedIn } = useAuth()
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
     // 使用 requestAnimationFrame 来延迟一帧，确保状态更新和渲染同步
     requestAnimationFrame(() => {
       setIsLoading(false)
     })
-  }, [searchParams, setLoggedIn])
+  }, [])
 
   // 骨架屏组件
   const SkeletonContent = () => (
@@ -60,6 +70,11 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      {/* 将 useSearchParams 包装在 Suspense 中 */}
+      <Suspense fallback={null}>
+        <SearchParamsHandler />
+      </Suspense>
+      
       <header className="fixed top-0 z-50 w-full border-b bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 items-center">
           <Link href="/" className="flex items-center space-x-2 mr-8">

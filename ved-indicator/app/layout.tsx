@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Toaster } from "sonner"
-// Analytics 将在安装依赖后引入
-// import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   title: 'Ved Indicator | 教育指标分析平台',
@@ -23,8 +22,7 @@ export default function RootLayout({
       <body>
         {children}
         <Toaster />
-        {/* Analytics 组件将在安装依赖后添加 */}
-        {/* <Analytics /> */}
+        <Analytics />
       </body>
     </html>
   )
