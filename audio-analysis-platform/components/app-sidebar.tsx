@@ -30,9 +30,9 @@ export function AppSidebar() {
 
   const handleLogout = () => {
     // 清除登录状态
-    localStorage.removeItem('auth-storage')
+    localStorage.removeItem('isLoggedIn')
     // 跳转到登录页面
-    window.location.href = 'http://localhost:3001'
+    window.location.href = process.env.NEXT_PUBLIC_LOGIN_URL || 'http://localhost:3001'
   }
 
   return (
