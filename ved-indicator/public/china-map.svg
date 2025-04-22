@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 基础地图背景 -->
+  <rect width="800" height="600" fill="#0F111A" />
+  
+  <!-- 中国地图轮廓 - 简化表示 -->
+  <path d="M650,165 C645,160 638,158 631,157 C624,156 617,157 610,158 C603,159 596,162 589,165 C582,168 575,170 568,171 C561,172 554,172 547,170 C540,168 533,165 526,162 C519,159 512,155 505,150 C498,145 491,140 484,134 C477,128 470,122 463,116 C456,110 449,104 442,98 C435,92 428,87 421,85 C414,83 407,83 400,85 C393,87 386,91 379,95 C372,99 365,104 358,108 C351,112 344,116 337,120 C330,124 323,128 316,132 C309,136 302,140 295,143 C288,146 281,148 274,149 C267,150 260,150 253,149 C246,148 239,146 232,143 C225,140 218,137 211,133 C204,129 197,125 190,123 C183,121 176,122 169,124 C162,126 155,130 148,134 C141,138 134,143 127,149 C120,155 113,163 106,170 C99,177 92,184 85,190 C78,196 71,201 64,205 C57,209 50,211 43,214 C36,217 29,221 22,225 C15,229 8,233 1,237 C-6,241 -13,245 -20,248 C-27,251 -34,253 -41,253 C-48,253 -55,251 -62,248 C-69,245 -76,241 -83,237 C-90,233 -97,229 -104,225 C-111,221 -118,217 -125,214 C-132,211 -139,209 -146,205 C-153,201 -160,196 -167,190 C-174,184 -181,177 -188,170 C-195,163 -202,155 -209,149 C-216,143 -223,138 -230,134 C-237,130 -244,126 -251,124 C-258,122 -265,121 -272,123 C-279,125 -286,129 -293,133 C-300,137 -307,140 -314,143 C-321,146 -328,148 -335,149 C-342,150 -349,150 -356,149 C-363,148 -370,146 -377,143 C-384,140 -391,136 -398,132 C-405,128 -412,124 -419,120 C-426,116 -433,112 -440,108 C-447,104 -454,99 -461,95 C-468,91 -475,87 -482,85 C-489,83 -496,83 -503,85 C-510,87 -517,92 -524,98 C-531,104 -538,110 -545,116 C-552,122 -559,128 -566,134 C-573,140 -580,145 -587,150 C-594,155 -601,159 -608,162 C-615,165 -622,168 -629,170 C-636,172 -643,172 -650,171 C-657,170 -664,168 -671,165 C-678,162 -685,159 -692,158 C-699,157 -706,156 -713,157 C-720,158 -727,160 -732,165"
+        fill="#1A1A2E" stroke="#4A90E2" stroke-width="1.5" stroke-opacity="0.4" transform="translate(400, 300)" />
+
+  <!-- 省份边界线 - 简化表示 -->
+  <g stroke="#4A90E2" stroke-width="0.5" stroke-opacity="0.2" transform="translate(400, 300)">
+    <!-- 东北地区 -->
+    <path d="M80,-150 L120,-180 L150,-190 L180,-170 L200,-130" />
+    <!-- 华北地区 -->
+    <path d="M0,-100 L50,-80 L100,-90 L150,-70 L180,-30" />
+    <!-- 华东地区 -->
+    <path d="M100,0 L150,20 L180,60 L150,100" />
+    <!-- 华南地区 -->
+    <path d="M50,100 L100,120 L130,150" />
+    <!-- 西南地区 -->
+    <path d="M-50,50 L-100,70 L-150,90" />
+    <!-- 西北地区 -->
+    <path d="M-150,-50 L-100,-70 L-50,-90 L0,-100" />
+    <!-- 中部地区 -->
+    <path d="M-20,0 L20,10 L50,30 L70,50" />
+  </g>
+
+  <!-- 主要城市点 -->
+  <g transform="translate(400, 300)">
+    <!-- 北京 -->
+    <circle cx="30" cy="-80" r="3" fill="#4A90E2" opacity="0.8">
+      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="3s" repeatCount="indefinite" />
+    </circle>
+    <!-- 上海 -->
+    <circle cx="150" cy="20" r="3" fill="#4A90E2" opacity="0.8">
+      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="3s" repeatCount="indefinite" />
+    </circle>
+    <!-- 广州 -->
+    <circle cx="80" cy="120" r="3" fill="#4A90E2" opacity="0.8">
+      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="3s" repeatCount="indefinite" />
+    </circle>
+    <!-- 成都 -->
+    <circle cx="-80" cy="50" r="3" fill="#4A90E2" opacity="0.8">
+      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="3s" repeatCount="indefinite" />
+    </circle>
+    <!-- 西安 -->
+    <circle cx="-30" cy="-20" r="3" fill="#4A90E2" opacity="0.8">
+      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="3s" repeatCount="indefinite" />
+    </circle>
+  </g>
+
+  <!-- 装饰性光晕 -->
+  <g opacity="0.5">
+    <circle cx="430" cy="220" r="50" fill="url(#blueGlow)" />
+    <circle cx="550" cy="320" r="40" fill="url(#violetGlow)" />
+    <circle cx="320" cy="350" r="60" fill="url(#amberGlow)" />
+  </g>
+
+  <!-- 渐变定义 -->
+  <defs>
+    <radialGradient id="blueGlow" cx="0.5" cy="0.5" r="0.5" fx="0.5" fy="0.5">
+      <stop offset="0%" stop-color="#4A90E2" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#4A90E2" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="violetGlow" cx="0.5" cy="0.5" r="0.5" fx="0.5" fy="0.5">
+      <stop offset="0%" stop-color="#9C6ADE" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#9C6ADE" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="amberGlow" cx="0.5" cy="0.5" r="0.5" fx="0.5" fy="0.5">
+      <stop offset="0%" stop-color="#FFC107" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#FFC107" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+</svg> 
