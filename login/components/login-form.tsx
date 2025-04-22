@@ -31,23 +31,31 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
     setError(null)
     
     try {
-      // 验证用户
+      // 验证用户 - 这里我们确保同步执行
       const user = userStore.validateUser(email, password)
       
       if (!user) {
         throw new Error("登录失败，邮箱或密码错误")
       }
       
-      // 模拟登录过程
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      // 改为使用setTimeout而不是Promise
+      setTimeout(() => {
+        try {
+          // 跳转回ved-indicator页面，并带上登录状态
+          const vedIndicatorUrl = process.env.NEXT_PUBLIC_VED_INDICATOR_URL || "http://localhost:3000";
+          window.location.href = `${vedIndicatorUrl}?login=success`;
+        } catch (redirectError) {
+          console.error('Redirect failed:', redirectError);
+          setError("跳转失败，请稍后再试");
+          setIsLoading(false);
+        }
+      }, 1000);
       
-      // 跳转回ved-indicator页面，并带上登录状态
-      const vedIndicatorUrl = process.env.NEXT_PUBLIC_VED_INDICATOR_URL || "http://localhost:3000";
-      window.location.href = `${vedIndicatorUrl}?login=success`
+      // 注意：这里我们不设置setIsLoading(false)，因为将在跳转前保持加载状态
+      
     } catch (error) {
       console.error('Login failed:', error)
       setError(error instanceof Error ? error.message : "登录失败，请稍后再试")
-    } finally {
       setIsLoading(false)
     }
   }
