@@ -12,7 +12,7 @@ import {
   Image as ImageIcon,
   ChevronDown,
   ChevronRight,
-  ChevronLeft as ChevronLeftIcon,
+  ChevronLeft,
   Flame,
   Diamond,
   ArrowRight,
@@ -23,12 +23,7 @@ import {
   X,
   Plus,
   Clock,
-  PlusCircle,
-  Layers,
-  BarChart,
-  Tag,
-  Sliders,
-  Bookmark
+  PlusCircle
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -81,34 +76,10 @@ export default function CoursesPage() {
   const [interestWeight, setInterestWeight] = useState(10)
   
   // 添加当前选中的标签页状态
-  const [selectedTab, setSelectedTab] = useState<"recommended" | "trending" | "career">("recommended")
+  const [selectedTab, setSelectedTab] = useState<"recommended" | "trending" | "popular" | "career">("recommended")
   
   // 添加职位偏好状态
   const [selectedCareerPath, setSelectedCareerPath] = useState<string | null>(null)
-  
-  // 添加职业子路径选择状态
-  const [selectedSubPaths, setSelectedSubPaths] = useState<{[key: string]: string[]}>({
-    "AI工程师": [],
-    "全栈开发": [],
-    "数据科学家": []
-  })
-  
-  // 添加职业路径展开/收起状态
-  const [expandedPaths, setExpandedPaths] = useState<{[key: string]: boolean}>({
-    "AI工程师": true,
-    "全栈开发": true,
-    "数据科学家": true
-  })
-
-  // 添加动态维度筛选状态
-  const [showDimensionFilter, setShowDimensionFilter] = useState(true)
-  const [activeDimensions, setActiveDimensions] = useState<string[]>([])
-  const [selectedFilters, setSelectedFilters] = useState<{[key: string]: string[]}>({
-    "技术领域": [],
-    "难度级别": [],
-    "更新状态": [],
-    "课程时长": []
-  })
   
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light")
@@ -124,96 +95,24 @@ export default function CoursesPage() {
     }
   }
 
-  // 切换职业路径展开/收起状态
-  const togglePathExpansion = (pathName: string) => {
-    setExpandedPaths({
-      ...expandedPaths,
-      [pathName]: !expandedPaths[pathName]
-    })
-  }
-  
-  // 选择或取消选择子路径
-  const toggleSubPath = (pathName: string, subPath: string) => {
-    const currentSubPaths = selectedSubPaths[pathName] || []
-    const newSubPaths = currentSubPaths.includes(subPath)
-      ? currentSubPaths.filter(p => p !== subPath)
-      : [...currentSubPaths, subPath]
-    
-    setSelectedSubPaths({
-      ...selectedSubPaths,
-      [pathName]: newSubPaths
-    })
-    
-    // 同时设置当前选择的职业路径
-    if (newSubPaths.length > 0 && !selectedCareerPath) {
-      setSelectedCareerPath(pathName)
-    } else if (newSubPaths.length === 0 && selectedCareerPath === pathName) {
-      // 检查是否所有路径都没有选择
-      const anyPathSelected = Object.values(selectedSubPaths)
-        .some(paths => paths.filter(p => p !== subPath).length > 0)
-      
-      if (!anyPathSelected) {
-        setSelectedCareerPath(null)
-      }
-    }
-    
-    // 设置选项卡为"岗位定制"
-    setSelectedTab("career")
-  }
-
   // 添加标签页切换处理函数
   const handleTabChange = (value: string) => {
-    setSelectedTab(value as "recommended" | "trending" | "career")
+    setSelectedTab(value as "recommended" | "trending" | "popular" | "career")
     setCurrentPage(1) // 切换标签页时重置到第一页
   }
   
   // 获取与职业路径相关的标签
-  const getRelevantTagsForCareer = (careerPath: string, subPaths: string[] = []) => {
-    // 基础标签，根据职业路径提供默认标签
-    let baseTags: string[] = [];
-    
+  const getRelevantTagsForCareer = (careerPath: string) => {
     switch(careerPath) {
       case "AI工程师":
-        baseTags = ["AI", "机器学习", "深度学习", "大模型", "LLM", "Python"];
-        break;
+        return ["AI", "机器学习", "深度学习", "大模型", "LLM", "Python"];
       case "全栈开发":
-        baseTags = ["Web开发", "前端", "后端", "React", "Vue", "Node.js"];
-        break;
+        return ["Web开发", "前端", "后端", "React", "Vue", "Node.js"];
       case "数据科学家":
-        baseTags = ["数据分析", "数据可视化", "大数据", "Python", "R"];
-        break;
+        return ["数据分析", "数据可视化", "大数据", "Python", "R"];
       default:
         return [];
     }
-    
-    // 如果没有选择子路径，返回基础标签
-    if (!subPaths || subPaths.length === 0) {
-      return baseTags;
-    }
-    
-    // 根据选择的子路径增加特定标签
-    const specificTags: {[key: string]: string[]} = {
-      // AI工程师子路径
-      "算法工程师": ["算法", "机器学习", "数学", "优化"],
-      "AI应用开发": ["应用开发", "API", "集成", "LLM", "大模型"],
-      "MLOps工程师": ["MLOps", "DevOps", "部署", "监控", "自动化"],
-      
-      // 全栈开发子路径
-      "前端开发": ["前端", "UI", "React", "Vue", "CSS", "JavaScript"],
-      "后端开发": ["后端", "API", "数据库", "服务器", "Node.js", "Java", "Python"],
-      "DevOps": ["DevOps", "CI/CD", "容器化", "Docker", "Kubernetes"],
-      
-      // 数据科学家子路径
-      "数据分析师": ["数据分析", "统计", "可视化", "报表", "BI"],
-      "数据工程师": ["数据工程", "ETL", "数据仓库", "大数据", "Hadoop", "Spark"],
-      "机器学习工程师": ["机器学习", "算法", "模型", "训练", "Python", "TensorFlow"]
-    };
-    
-    // 合并所有选中子路径的标签
-    const additionalTags = subPaths.flatMap(subPath => specificTags[subPath] || []);
-    
-    // 合并标签并去重
-    return [...new Set([...baseTags, ...additionalTags])];
   }
   
   // 计算课程综合得分
@@ -2239,99 +2138,6 @@ export default function CoursesPage() {
     }
   }
   
-  // 处理维度选择
-  const toggleDimension = (dimension: string) => {
-    if (activeDimensions.includes(dimension)) {
-      setActiveDimensions(activeDimensions.filter(d => d !== dimension))
-    } else {
-      setActiveDimensions([...activeDimensions, dimension])
-    }
-  }
-
-  // 处理筛选选项选择
-  const toggleFilter = (category: string, option: string) => {
-    const currentFilters = selectedFilters[category] || []
-    
-    if (currentFilters.includes(option)) {
-      setSelectedFilters({
-        ...selectedFilters,
-        [category]: currentFilters.filter(o => o !== option)
-      })
-    } else {
-      setSelectedFilters({
-        ...selectedFilters,
-        [category]: [...currentFilters, option]
-      })
-    }
-  }
-
-  // 清除所有筛选条件
-  const clearAllFilters = () => {
-    setSelectedFilters({
-      "技术领域": [],
-      "难度级别": [],
-      "更新状态": [],
-      "课程时长": []
-    })
-  }
-
-  // 获取活跃筛选条件总数
-  const getActiveFilterCount = () => {
-    return Object.values(selectedFilters).reduce((count, filters) => count + filters.length, 0)
-  }
-
-  // 根据筛选条件过滤课程
-  const filterCoursesByDimensions = (courses: Course[]) => {
-    // 如果没有选择任何筛选条件，返回原列表
-    if (getActiveFilterCount() === 0) return courses
-    
-    return courses.filter(course => {
-      // 技术领域筛选 (基于标签)
-      if (selectedFilters["技术领域"].length > 0 && 
-          !selectedFilters["技术领域"].some(tech => course.tags.includes(tech))) {
-        return false
-      }
-      
-      // 难度级别筛选
-      if (selectedFilters["难度级别"].length > 0) {
-        const levelMap: {[key: string]: number} = {
-          "入门": 1,
-          "初级": 2,
-          "中级": 3,
-          "高级": 4,
-          "专家": 5
-        }
-        const courseLevelName = Object.keys(levelMap).find(key => levelMap[key] === course.level)
-        if (!courseLevelName || !selectedFilters["难度级别"].includes(courseLevelName)) {
-          return false
-        }
-      }
-      
-      // 更新状态筛选
-      if (selectedFilters["更新状态"].length > 0 && 
-          !selectedFilters["更新状态"].includes(course.status)) {
-        return false
-      }
-      
-      // 课程时长筛选
-      if (selectedFilters["课程时长"].length > 0) {
-        const durationWeeks = parseInt(course.duration.replace("周", ""))
-        let matches = false
-        
-        selectedFilters["课程时长"].forEach(range => {
-          if (range === "1-4周" && durationWeeks >= 1 && durationWeeks <= 4) matches = true
-          if (range === "5-8周" && durationWeeks >= 5 && durationWeeks <= 8) matches = true
-          if (range === "9-12周" && durationWeeks >= 9 && durationWeeks <= 12) matches = true
-          if (range === "12周以上" && durationWeeks > 12) matches = true
-        })
-        
-        if (!matches) return false
-      }
-      
-      return true
-    })
-  }
-  
   // 根据不同标签过滤课程
   const getFilteredCoursesByTab = () => {
     let filtered = searchTerm.trim() === "" 
@@ -2344,9 +2150,6 @@ export default function CoursesPage() {
           course.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
         );
     
-    // 应用动态维度筛选
-    filtered = filterCoursesByDimensions(filtered)
-    
     switch (selectedTab) {
       case "trending":
         // 按趋势升序排序 (去掉+号并转为数字)
@@ -2354,25 +2157,17 @@ export default function CoursesPage() {
           parseInt(b.trend.replace('+', '')) - parseInt(a.trend.replace('+', ''))
         );
       
+      case "popular":
+        // 按热度降序排序
+        return filtered.sort((a, b) => b.heat - a.heat);
+      
       case "career":
         if (selectedCareerPath) {
-          // 获取当前选中的子路径
-          const activeSubPaths = selectedSubPaths[selectedCareerPath] || [];
-          
-          // 获取与选中职业路径和子路径相关的标签
-          const relevantTags = getRelevantTagsForCareer(selectedCareerPath, activeSubPaths);
-          
+          // 如果选择了职业路径，优先显示相关标签的课程
+          const relevantTags = getRelevantTagsForCareer(selectedCareerPath);
           return filtered.sort((a, b) => {
-            // 计算每个课程与标签的匹配度
             const aRelevance = a.tags.filter(tag => relevantTags.includes(tag)).length;
             const bRelevance = b.tags.filter(tag => relevantTags.includes(tag)).length;
-            
-            // 如果匹配度相同，则按热度排序
-            if (aRelevance === bRelevance) {
-              return b.heat - a.heat;
-            }
-            
-            // 按匹配度排序
             return bRelevance - aRelevance;
           });
         }
@@ -2622,81 +2417,30 @@ export default function CoursesPage() {
             <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-5">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-semibold">职业路径</h2>
-                <Button variant="ghost" size="sm" className="rounded-full p-0 h-6 w-6">
-                  <ChevronDown className="h-4 w-4 text-gray-500" />
-                </Button>
+                <ChevronDown className="h-4 w-4 text-gray-500" />
               </div>
               
               <div className="space-y-3">
                 {careerPaths.map((path, index) => (
                   <div key={index} className="space-y-2">
-                    <div 
-                      className="flex items-center cursor-pointer" 
-                      onClick={() => togglePathExpansion(path.name)}
-                    >
-                      {expandedPaths[path.name] ? (
-                        <ChevronDown className="h-4 w-4 text-gray-500 mr-1" />
-                      ) : (
-                        <ChevronRight className="h-4 w-4 text-gray-500 mr-1" />
-                      )}
-                      <span className={`font-medium ${selectedCareerPath === path.name ? 'text-blue-600' : ''}`}>
-                        {path.name}
-                      </span>
-                      {selectedSubPaths[path.name]?.length > 0 && (
-                        <Badge variant="secondary" className="ml-2 bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
-                          {selectedSubPaths[path.name].length}
-                        </Badge>
-                      )}
+                    <div className="flex items-center">
+                      <ChevronRight className="h-4 w-4 text-gray-500 mr-1" />
+                      <span className="font-medium">{path.name}</span>
                     </div>
                     
-                    {expandedPaths[path.name] && (
-                      <div className="pl-6 space-y-1.5">
-                        {path.subPaths.map((subPath, subIndex) => (
-                          <div key={subIndex} className="flex items-center">
-                            <Checkbox 
-                              id={`${path.name}-${subPath}`} 
-                              className="mr-2"
-                              checked={selectedSubPaths[path.name]?.includes(subPath) || false}
-                              onCheckedChange={() => toggleSubPath(path.name, subPath)}
-                            />
-                            <label 
-                              htmlFor={`${path.name}-${subPath}`} 
-                              className={`text-sm cursor-pointer ${
-                                selectedSubPaths[path.name]?.includes(subPath) 
-                                  ? 'text-blue-600 font-medium' 
-                                  : 'text-gray-600 dark:text-gray-400'
-                              }`}
-                              onClick={() => toggleSubPath(path.name, subPath)}
-                            >
-                              {subPath}
-                            </label>
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                    <div className="pl-6 space-y-1.5">
+                      {path.subPaths.map((subPath, subIndex) => (
+                        <div key={subIndex} className="flex items-center">
+                          <Checkbox id={`${path.name}-${subPath}`} className="mr-2" />
+                          <label htmlFor={`${path.name}-${subPath}`} className="text-sm text-gray-600 dark:text-gray-400">
+                            {subPath}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
-              
-              {Object.values(selectedSubPaths).some(paths => paths.length > 0) && (
-                <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="w-full rounded-lg text-xs"
-                    onClick={() => {
-                      setSelectedSubPaths({
-                        "AI工程师": [],
-                        "全栈开发": [],
-                        "数据科学家": []
-                      });
-                      setSelectedCareerPath(null);
-                    }}
-                  >
-                    <X className="h-3.5 w-3.5 mr-1" /> 清除选择
-                  </Button>
-                </div>
-              )}
             </div>
             
             <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-5">
@@ -2754,6 +2498,9 @@ export default function CoursesPage() {
                   <TabsTrigger value="trending" className="rounded-md text-sm">
                     趋势新课
                   </TabsTrigger>
+                  <TabsTrigger value="popular" className="rounded-md text-sm">
+                    热门选择
+                  </TabsTrigger>
                   <TabsTrigger value="career" className="rounded-md text-sm">
                     岗位定制
                   </TabsTrigger>
@@ -2771,87 +2518,28 @@ export default function CoursesPage() {
                   </div>
                 </TabsContent>
                 
+                <TabsContent value="popular" className="mt-4">
+                  <div className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    平台上最受欢迎的课程，拥有最高的学习热度和评价
+                  </div>
+                </TabsContent>
+                
                 <TabsContent value="career" className="mt-4">
                   <div className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                    选择您感兴趣的职业路径，我们将根据您的选择推荐最匹配的技能课程
+                    请选择您感兴趣的职业路径，我们将为您推荐相关技能课程
                   </div>
-                  
                   <div className="flex flex-wrap gap-2 mb-4">
                     {careerPaths.map((path, index) => (
                       <Badge 
                         key={index} 
                         variant={selectedCareerPath === path.name ? "default" : "outline"}
                         className="cursor-pointer"
-                        onClick={() => {
-                          const newValue = selectedCareerPath === path.name ? null : path.name;
-                          setSelectedCareerPath(newValue);
-                          // 自动展开被选中的路径
-                          if (newValue) {
-                            setExpandedPaths({
-                              ...expandedPaths,
-                              [path.name]: true
-                            });
-                          }
-                        }}
+                        onClick={() => setSelectedCareerPath(selectedCareerPath === path.name ? null : path.name)}
                       >
                         {path.name}
-                        {selectedSubPaths[path.name]?.length > 0 && (
-                          <span className="ml-1.5 inline-flex items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-800 dark:text-blue-300 w-4 h-4 text-[10px]">
-                            {selectedSubPaths[path.name].length}
-                          </span>
-                        )}
                       </Badge>
                     ))}
                   </div>
-                  
-                  {selectedCareerPath && (
-                    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/30 rounded-lg p-4 mb-4">
-                      <div className="flex items-start">
-                        <div className="mr-3 mt-1 rounded-full bg-blue-100 dark:bg-blue-800/40 p-1.5">
-                          <User className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                        </div>
-                        <div>
-                          <h3 className="font-medium text-blue-800 dark:text-blue-400">
-                            {selectedCareerPath} 职业路径
-                          </h3>
-                          
-                          {/* 显示选中的子路径 */}
-                          {selectedSubPaths[selectedCareerPath]?.length > 0 ? (
-                            <div className="mt-1.5 text-sm text-blue-700 dark:text-blue-300">
-                              <p className="mb-1">已选择专业方向:</p>
-                              <div className="flex flex-wrap gap-1.5">
-                                {selectedSubPaths[selectedCareerPath].map((subPath, i) => (
-                                  <Badge 
-                                    key={i} 
-                                    className="bg-blue-100 dark:bg-blue-800/40 text-blue-800 dark:text-blue-300 cursor-pointer"
-                                    onClick={() => toggleSubPath(selectedCareerPath, subPath)}
-                                  >
-                                    {subPath} <X className="ml-1 h-3 w-3" />
-                                  </Badge>
-                                ))}
-                              </div>
-                            </div>
-                          ) : (
-                            <p className="mt-1 text-sm text-blue-700 dark:text-blue-300">
-                              请在左侧选择具体专业方向，获取更精准的课程推荐
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {!selectedCareerPath && (
-                    <div className="text-center py-4 mb-4 bg-gray-50 dark:bg-gray-800/40 rounded-lg">
-                      <div className="mx-auto w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-3">
-                        <User className="h-6 w-6 text-gray-400" />
-                      </div>
-                      <h3 className="font-medium mb-1">请选择职业发展方向</h3>
-                      <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md mx-auto">
-                        选择您感兴趣的职业路径和专业方向，我们将为您定制匹配度最高的技能课程
-                      </p>
-                    </div>
-                  )}
                 </TabsContent>
               </Tabs>
               
@@ -2993,7 +2681,7 @@ export default function CoursesPage() {
                   disabled={currentPage === 1}
                   className="rounded-lg"
                 >
-                  <ChevronLeftIcon className="h-4 w-4 mr-1" />
+                  <ChevronLeft className="h-4 w-4 mr-1" />
                   上一页
                 </Button>
                 
@@ -3028,165 +2716,28 @@ export default function CoursesPage() {
             </div>
           </div>
           
-          {/* 右侧区域 */}
-          <div className="w-full lg:w-1/5 space-y-6">
-            {/* 动态维度筛选面板 */}
-            <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-5 sticky top-24">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-lg font-semibold">动态维度筛选</h2>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="rounded-full"
-                  onClick={() => setShowDimensionFilter(!showDimensionFilter)}
-                >
-                  {showDimensionFilter ? <ChevronRight className="h-4 w-4" /> : <ChevronLeftIcon className="h-4 w-4" />}
-                </Button>
-              </div>
-              
-              {showDimensionFilter && (
-                <div className="space-y-5">
-                  {getActiveFilterCount() > 0 && (
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-blue-600 font-medium">
-                        已选 {getActiveFilterCount()} 个条件
-                      </span>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-7 rounded-lg text-xs text-red-500 hover:text-red-600"
-                        onClick={clearAllFilters}
-                      >
-                        <X className="h-3 w-3 mr-1" /> 清除全部
-                      </Button>
-                    </div>
-                  )}
-                  
-                  {filterCategories.map((category, index) => (
-                    <div key={index} className="space-y-2">
-                      <div 
-                        className="flex items-center justify-between cursor-pointer"
-                        onClick={() => toggleDimension(category.name)}
-                      >
-                        <div className="flex items-center">
-                          {category.name === "技术领域" && <Tag className="h-4 w-4 mr-1.5 text-blue-500" />}
-                          {category.name === "难度级别" && <BarChart className="h-4 w-4 mr-1.5 text-green-500" />}
-                          {category.name === "更新状态" && <Clock className="h-4 w-4 mr-1.5 text-amber-500" />}
-                          {category.name === "课程时长" && <Sliders className="h-4 w-4 mr-1.5 text-purple-500" />}
-                          <h3 className="text-sm font-medium">{category.name}</h3>
-                        </div>
-                        {activeDimensions.includes(category.name) ? (
-                          <ChevronDown className="h-4 w-4 text-gray-400" />
-                        ) : (
-                          <ChevronRight className="h-4 w-4 text-gray-400" />
-                        )}
-                      </div>
-                      
-                      {activeDimensions.includes(category.name) && (
-                        <div className="pl-6 space-y-1.5">
-                          {category.options.map((option, optionIndex) => (
-                            <div key={optionIndex} className="flex items-center">
-                              <Checkbox 
-                                id={`${category.name}-${option}`} 
-                                className="mr-2"
-                                checked={selectedFilters[category.name]?.includes(option) || false}
-                                onCheckedChange={() => toggleFilter(category.name, option)}
-                              />
-                              <label 
-                                htmlFor={`${category.name}-${option}`} 
-                                className={`text-sm cursor-pointer ${
-                                  selectedFilters[category.name]?.includes(option) 
-                                    ? 'text-blue-600 font-medium' 
-                                    : 'text-gray-600 dark:text-gray-400'
-                                }`}
-                              >
-                                {option}
-                              </label>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                  
-                  <div className="pt-3 border-t border-gray-100 dark:border-gray-800">
-                    <div className="text-xs text-gray-500 dark:text-gray-400 mb-3">
-                      应用筛选后的课程数量
-                    </div>
-                    <div className="flex items-center">
-                      <div className="flex-1">
-                        <Progress value={filterCoursesByDimensions(courseList).length / courseList.length * 100} className="h-2" />
-                      </div>
-                      <span className="ml-3 text-sm font-medium">
-                        {filterCoursesByDimensions(courseList).length}/{courseList.length}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <div className="pt-3 border-t border-gray-100 dark:border-gray-800 space-y-3">
-                    <Button variant="default" size="sm" className="w-full rounded-lg">
-                      <Layers className="h-4 w-4 mr-1.5" /> 应用并刷新
-                    </Button>
-                    
-                    {/* 新增: 添加自定义维度按钮 */}
-                    <Button variant="outline" size="sm" className="w-full rounded-lg">
-                      <PlusCircle className="h-4 w-4 mr-1.5" /> 添加自定义维度
-                    </Button>
-                    
-                    {/* 新增: 添加高级筛选选项 */}
-                    <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
-                      <h4 className="text-sm font-medium mb-2 flex items-center">
-                        <Sliders className="h-4 w-4 mr-1.5 text-blue-500" />
-                        高级筛选维度
-                      </h4>
-                      
-                      <div className="space-y-2 text-sm">
-                        <div className="flex items-center">
-                          <Checkbox id="advanced-price" className="mr-2" />
-                          <label htmlFor="advanced-price" className="cursor-pointer text-gray-600 dark:text-gray-400">
-                            价格区间
-                          </label>
-                        </div>
-                        
-                        <div className="flex items-center">
-                          <Checkbox id="advanced-rating" className="mr-2" />
-                          <label htmlFor="advanced-rating" className="cursor-pointer text-gray-600 dark:text-gray-400">
-                            用户评分
-                          </label>
-                        </div>
-                        
-                        <div className="flex items-center">
-                          <Checkbox id="advanced-completion" className="mr-2" />
-                          <label htmlFor="advanced-completion" className="cursor-pointer text-gray-600 dark:text-gray-400">
-                            完课率
-                          </label>
-                        </div>
-                      </div>
-                      
-                      <div className="mt-2 text-xs text-blue-600 flex items-center cursor-pointer">
-                        <span>查看更多维度</span>
-                        <ChevronRight className="h-3 w-3 ml-1" />
-                      </div>
-                    </div>
-                    
-                    {/* 新增: 保存为筛选方案 */}
-                    <div className="text-center pt-2 border-t border-gray-100 dark:border-gray-800">
-                      <span className="text-xs text-blue-600 cursor-pointer flex items-center justify-center">
-                        <Bookmark className="h-3 w-3 mr-1" />
-                        保存为个人筛选方案
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-            
-            {/* 课程对比面板 */}
-            <div className={`bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-5 sticky top-96 transition-all duration-300 ${showComparePanel ? 'block' : 'hidden lg:block'}`}>
+          {/* 右侧对比面板 - 可折叠 */}
+          <aside className={`w-full lg:w-1/5 space-y-6 ${showComparePanel ? 'block' : 'hidden lg:block'}`}>
+            <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-5 sticky top-24 transition-all duration-300">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-semibold">课程对比</h2>
                 <Button variant="ghost" size="sm" className="rounded-full" onClick={() => setShowComparePanel(!showComparePanel)}>
-                  {showComparePanel ? <ChevronRight className="h-4 w-4" /> : <ChevronLeftIcon className="h-4 w-4" />}
+                  {showComparePanel ? <ChevronRight className="h-4 w-4" /> : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="h-4 w-4"
+                    >
+                      <path d="m15 18-6-6 6-6" />
+                    </svg>
+                  )}
                 </Button>
               </div>
               
@@ -3250,7 +2801,7 @@ export default function CoursesPage() {
                 </div>
               )}
             </div>
-          </div>
+          </aside>
         </main>
       </div>
     </div>
