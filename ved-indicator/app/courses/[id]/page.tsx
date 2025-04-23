@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import React from "react" // 添加React导入
 import { 
   ArrowLeft, 
   Book, 
@@ -87,7 +88,11 @@ type CoursesDB = {
   [key: string]: CourseInfo;
 }
 
-export default function CourseDetailPage({ params }: { params: { id: string } }) {
+export default function CourseDetailPage({ params }: { params: any }) {
+  // 使用类型断言解决类型问题
+  const unwrappedParams = React.use(params) as { id: string };
+  const id = unwrappedParams.id;
+  
   const [theme, setTheme] = useState<"light" | "dark">("light")
   const [isBookmarked, setIsBookmarked] = useState(false)
   const [userRating, setUserRating] = useState(0)
@@ -740,7 +745,7 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
     },
     // 默认课程数据（原有的示例课程）
     "default": {
-      id: params.id,
+      id: id, // 使用已解包的id变量，而不是直接访问params.id
       title: "大型语言模型应用开发与实践",
       provider: "深蓝学院",
       instructor: "张教授",
@@ -830,8 +835,8 @@ export default function CourseDetailPage({ params }: { params: { id: string } })
     }
   }
 
-  // 根据ID获取课程数据，如果不存在则使用默认数据
-  const courseData = coursesDB[params.id] || coursesDB["default"]
+  // 使用解包后的id
+  const courseData = coursesDB[id] || coursesDB["default"]
 
   return (
     <div className="flex min-h-screen flex-col bg-[#f9fafb] dark:bg-gray-950">
