@@ -19,12 +19,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
-      <head>
-        {/* 确保favicon正确加载 */}
-        <link rel="icon" href="/favicon.ico" />
-        {/* 预加载Vercel Analytics脚本 */}
-        <link rel="preload" href="/_vercel/insights/script.js" as="script" />
-      </head>
       <body>
         {children}
         <Toaster />

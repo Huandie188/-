@@ -29,56 +29,6 @@ const nextConfig = {
     parallelServerCompiles: true,
   },
   compress: true,
-  // 添加自定义响应头
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY',
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block',
-          },
-        ],
-      },
-      {
-        source: '/_vercel/insights/script.js',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=604800',
-          },
-        ],
-      },
-      {
-        source: '/favicon.ico',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=86400',
-          },
-        ],
-      },
-    ]
-  },
-  // 添加自定义重定向规则
-  async redirects() {
-    return [
-      {
-        source: '/home',
-        destination: '/',
-        permanent: true,
-      },
-    ]
-  }
 }
 
 if (userConfig) {
