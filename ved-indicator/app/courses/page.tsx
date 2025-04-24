@@ -243,10 +243,19 @@ export default function CoursesPage() {
   
   // 计算课程综合得分
   const calculateCourseScore = (course: Course) => {
-    const trendScore = parseInt(course.trend.replace('+', '')) * (trendWeight / 100);
-    const heatScore = course.heat * (localHeatWeight / 100);
-    const jobScore = (course.level >= 3 ? 100 : 50) * (jobMatchWeight / 100); // 简化的岗位匹配度
-    const interestScore = course.tags.includes("AI") ? 100 : 50 * (interestWeight / 100); // 简化的兴趣匹配度
+    // 添加安全检查，确保course.trend存在且为字符串
+    const trendScore = course?.trend && typeof course.trend === 'string' 
+      ? parseInt(course.trend.replace('+', '') || '0') * (trendWeight / 100)
+      : 0;
+    
+    // 添加安全检查，确保course.heat存在
+    const heatScore = (course?.heat || 0) * (localHeatWeight / 100);
+    
+    // 添加安全检查，确保course.level存在
+    const jobScore = (course?.level && course.level >= 3 ? 100 : 50) * (jobMatchWeight / 100);
+    
+    // 添加安全检查，确保course.tags存在且为数组
+    const interestScore = (course?.tags && Array.isArray(course.tags) && course.tags.includes("AI") ? 100 : 50) * (interestWeight / 100);
     
     return trendScore + heatScore + jobScore + interestScore;
   }
@@ -411,8 +420,18 @@ export default function CoursesPage() {
       
       // 课程时长筛选
       if (selectedFilters["课程时长"].length > 0) {
-        const durationWeeks = parseInt(course.duration.replace("周", ""))
-        let matches = false
+        // 添加安全检查，确保course.duration存在且为字符串
+        let durationWeeks = 0;
+        if (course?.duration && typeof course.duration === 'string') {
+          try {
+            durationWeeks = parseInt(course.duration.replace("周", "") || '0');
+          } catch (e) {
+            console.warn('解析课程时长失败:', course.duration);
+            durationWeeks = 0;
+          }
+        }
+        
+        let matches = false;
         
         selectedFilters["课程时长"].forEach(range => {
           if (range === "1-4周" && durationWeeks >= 1 && durationWeeks <= 4) matches = true
@@ -432,13 +451,22 @@ export default function CoursesPage() {
   const getFilteredCoursesByTab = () => {
     let filtered = searchTerm.trim() === "" 
       ? courses 
-      : courses.filter(course => 
-          course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          course.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          course.instructor.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          course.provider.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          course.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-        );
+      : courses.filter(course => {
+          // 添加安全检查确保所有属性存在
+          const title = course?.title?.toLowerCase() || "";
+          const description = course?.description?.toLowerCase() || "";
+          const instructor = course?.instructor?.toLowerCase() || "";
+          const provider = course?.provider?.toLowerCase() || "";
+          const tags = course?.tags || [];
+          
+          const term = searchTerm.toLowerCase();
+          
+          return title.includes(term) ||
+            description.includes(term) ||
+            instructor.includes(term) ||
+            provider.includes(term) ||
+            (Array.isArray(tags) && tags.some(tag => (tag || "").toLowerCase().includes(term)));
+        });
     
     // 应用动态维度筛选
     filtered = filterCoursesByDimensions(filtered)
@@ -446,9 +474,16 @@ export default function CoursesPage() {
     switch (selectedTab) {
       case "trending":
         // 按趋势升序排序 (去掉+号并转为数字)
-        return filtered.sort((a, b) => 
-          parseInt(b.trend.replace('+', '')) - parseInt(a.trend.replace('+', ''))
-        );
+        return filtered.sort((a, b) => {
+          // 添加安全检查，确保a.trend和b.trend存在且为字符串
+          const aTrend = a?.trend && typeof a.trend === 'string' 
+            ? parseInt(a.trend.replace('+', '') || '0') 
+            : 0;
+          const bTrend = b?.trend && typeof b.trend === 'string' 
+            ? parseInt(b.trend.replace('+', '') || '0') 
+            : 0;
+          return bTrend - aTrend;
+        });
       
       case "career":
         if (selectedCareerPath) {
@@ -459,13 +494,21 @@ export default function CoursesPage() {
           const relevantTags = getRelevantTagsForCareer(selectedCareerPath, activeSubPaths);
           
           return filtered.sort((a, b) => {
+            // 添加安全检查，确保a.tags和b.tags存在且为数组
             // 计算每个课程与标签的匹配度
-            const aRelevance = a.tags.filter(tag => relevantTags.includes(tag)).length;
-            const bRelevance = b.tags.filter(tag => relevantTags.includes(tag)).length;
+            const aRelevance = a?.tags && Array.isArray(a.tags) 
+              ? a.tags.filter(tag => relevantTags.includes(tag)).length
+              : 0;
+            const bRelevance = b?.tags && Array.isArray(b.tags)
+              ? b.tags.filter(tag => relevantTags.includes(tag)).length
+              : 0;
             
             // 如果匹配度相同，则按热度排序
             if (aRelevance === bRelevance) {
-              return b.heat - a.heat;
+              // 添加热度的安全检查
+              const aHeat = a?.heat || 0;
+              const bHeat = b?.heat || 0;
+              return bHeat - aHeat;
             }
             
             // 按匹配度排序
