@@ -389,9 +389,9 @@ export default function Home() {
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {[
                 {
-                  title: "人工智能导论",
-                  provider: "斯坦福大学",
-                  level: "初级",
+                  title: "初识机器学习-理论篇",
+                  provider: "慕课网",
+                  level: "中级",
                   duration: "8周",
                   rating: 4.9,
                   icon: <Book className="h-5 w-5" />,
@@ -403,8 +403,8 @@ export default function Home() {
                   badgeColor: "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400"
                 },
                 {
-                  title: "数据分析与可视化",
-                  provider: "麻省理工学院",
+                  title: "R语言之数据可视化",
+                  provider: "慕课网",
                   level: "中级",
                   duration: "10周",
                   rating: 4.8,
@@ -417,8 +417,8 @@ export default function Home() {
                   badgeColor: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
                 },
                 {
-                  title: "Web全栈开发",
-                  provider: "加州大学伯克利分校",
+                  title: "PHP实现微信公众平台开发—提升篇",
+                  provider: "慕课网",
                   level: "进阶",
                   duration: "12周",
                   rating: 4.7,
@@ -480,7 +480,7 @@ export default function Home() {
                         </div>
                       </div>
                       
-                      <Link href={i === 0 ? "/courses/ai-intro" : i === 1 ? "/courses/data-viz" : "/courses/web-dev"}>
+                      <Link href={i === 0 ? "/courses/imooc-717" : i === 1 ? "/courses/imooc-640" : "/courses/imooc-509"}>
                         <Button className={`w-full rounded-full bg-gradient-to-r ${course.color} text-white border-0 shadow-md hover:shadow-lg transition-shadow`}>
                           查看详情
                         </Button>
