@@ -46,6 +46,12 @@ const pieData = [
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"]
 
+// 数据类型定义
+export interface ChartDataPoint {
+  name: string;
+  value: number;
+}
+
 // 通用的图表错误边界组件
 interface ChartErrorBoundaryProps {
   children: ReactNode;
@@ -131,13 +137,18 @@ export function BarChart() {
   )
 }
 
-export function PieChart() {
+// 更新PieChart组件以接受数据参数
+interface PieChartProps {
+  data?: ChartDataPoint[];
+}
+
+export function PieChart({ data = pieData }: PieChartProps) {
   return (
     <ChartErrorBoundary>
       <ResponsiveContainer width="100%" height={300}>
         <RechartsPieChart>
           <Pie
-            data={pieData}
+            data={data}
             cx="50%"
             cy="50%"
             labelLine={false}
@@ -146,7 +157,7 @@ export function PieChart() {
             dataKey="value"
             label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
           >
-            {pieData.map((entry, index) => (
+            {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>

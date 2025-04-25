@@ -11,7 +11,12 @@
     "build": "next build",
     "start": "next start",
     "custom-server": "node server.js",
-    "lint": "next lint"
+    "lint": "next lint",
+    "crawl": "node scripts/multi-platform-crawler.js",
+    "crawl:imooc": "node scripts/crawler-imooc.js",
+    "crawl:simple": "node scripts/simple-mooc-crawler.js",
+    "seed-courses": "node scripts/seed-courses.js",
+    "list-courses": "node scripts/list-courses.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -62,6 +67,7 @@
     "next": "15.2.4",
     "next-themes": "^0.4.4",
     "prisma": "6.6.0",
+    "puppeteer": "^22.6.0",
     "react": "^19",
     "react-day-picker": "8.10.1",
     "react-dom": "^19",

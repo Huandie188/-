@@ -76,8 +76,8 @@ export function AppSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={isActive("/learning-paths")}>
-                  <Link href="/learning-paths">
+                <SidebarMenuButton asChild isActive={isActive("/management/learning-paths")}>
+                  <Link href="/management/learning-paths">
                     <School className="h-4 w-4" />
                     <span>学习路径</span>
                   </Link>
@@ -96,86 +96,6 @@ export function AppSidebar() {
                   <Link href="/users">
                     <Users className="h-4 w-4" />
                     <span>用户与反馈</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarSeparator />
-        <SidebarGroup>
-          <SidebarGroupLabel>数据分析</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={isActive("/market-analysis")}>
-                  <Link href="/market-analysis">
-                    <TrendingUp className="h-4 w-4" />
-                    <span>市场分析</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={isActive("/content-analysis")}>
-                  <Link href="/content-analysis">
-                    <BookMarked className="h-4 w-4" />
-                    <span>内容分析</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={isActive("/course-gaps")}>
-                  <Link href="/course-gaps">
-                    <AlertCircle className="h-4 w-4" />
-                    <span>课程缺口</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={isActive("/reports")}>
-                  <Link href="/reports">
-                    <BarChart3 className="h-4 w-4" />
-                    <span>报表中心</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarSeparator />
-        <SidebarGroup>
-          <SidebarGroupLabel>系统管理</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={isActive("/data-sources")}>
-                  <Link href="/data-sources">
-                    <Database className="h-4 w-4" />
-                    <span>数据源管理</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={isActive("/assistant")}>
-                  <Link href="/assistant">
-                    <MessageSquare className="h-4 w-4" />
-                    <span>AI助手设置</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={isActive("/settings")}>
-                  <Link href="/settings">
-                    <Settings className="h-4 w-4" />
-                    <span>系统设置</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={isActive("/help")}>
-                  <Link href="/help">
-                    <HelpCircle className="h-4 w-4" />
-                    <span>帮助与支持</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

@@ -1,4 +1,4 @@
-import { Bell, Search, Sparkles, ArrowLeft } from "lucide-react"
+import { Bell, Search, Sparkles, ArrowLeft, Home } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -12,23 +12,35 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ModeToggle } from "@/components/mode-toggle"
 import Link from "next/link"
+import Image from "next/image"
 
 export function DashboardHeader() {
   return (
     <div className="fixed top-0 left-0 right-0 z-50 border-b bg-gradient-to-r from-blue-700 to-purple-600 shadow-md">
-      <div className="flex h-16 items-center px-4">
-        <div className="flex items-center space-x-4">
+      <div className="flex h-16 items-center px-4 relative">
+        <div className="flex items-center">
+          <Link 
+            href={process.env.NEXT_PUBLIC_VED_INDICATOR_URL || "/"} 
+            className="flex items-center space-x-2 hover:bg-white/10 px-3 py-2 rounded-md transition-colors duration-200"
+            title="返回主系统"
+          >
+            <Image src="/5.png" alt="Logo" width={32} height={32} className="h-8 w-8" />
+            <div className="flex flex-col">
+              <span className="text-lg font-semibold text-white">EduFusion</span>
+              <span className="text-xs text-white/70">点击返回主系统</span>
+            </div>
+          </Link>
+        </div>
+        
+        <div className="absolute left-[275px] top-1/2 transform -translate-y-1/2">
           <Link href={process.env.NEXT_PUBLIC_VED_INDICATOR_URL || "/"}>
-            <Button variant="ghost" className="mr-2 text-white hover:bg-white/20 hover:text-white flex items-center space-x-1">
-              <ArrowLeft className="h-5 w-5" />
-              <span className="text-sm font-medium">返回主系统</span>
+            <Button variant="ghost" className="text-white hover:bg-white/20 hover:text-white flex items-center space-x-2 px-5 py-2.5">
+              <Home className="h-6 w-6" />
+              <span className="text-base font-medium">返回主页</span>
             </Button>
           </Link>
-          <div className="flex items-center space-x-2 text-white">
-            <Sparkles className="h-5 w-5 text-yellow-300" />
-            <span className="text-lg font-semibold">教育生态优化系统</span>
-          </div>
         </div>
+        
         <div className="ml-auto flex items-center space-x-4">
           <div className="relative">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-white/70" />
