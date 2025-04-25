@@ -16,7 +16,7 @@ import Image from "next/image"
 
 export function DashboardHeader() {
   // 主页URL - 确保绝对有一个有效值
-  const homeUrl = process.env.NEXT_PUBLIC_VED_INDICATOR_URL || 'https://web-web-eight.vercel.app';
+  const homeUrl = process.env.NEXT_PUBLIC_VED_INDICATOR_URL || 'https://test-ten-nu-93.vercel.app';
   
   // 调试信息 - 在开发者控制台打印环境变量的值
   console.log('主页URL:', homeUrl);
