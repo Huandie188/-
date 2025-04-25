@@ -46,57 +46,104 @@ export default function AiRecommendation({ onBack, username }: AiRecommendationP
     setError(null)
 
     try {
-      console.log('发送请求到AI API');
-      // 调用后端API
-      const response = await fetch('/api/ai', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ userInput }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({
-          error: `服务器错误: ${response.status}`
-        }));
-        console.error('服务器返回错误:', errorData);
-        throw new Error(errorData.error || `服务器错误: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log('收到AI响应');
+      // 改为使用模拟AI回答而不是真实API调用
+      console.log('模拟AI回答');
       
-      // 确保数据包含预期的字段
-      if (!data.aiResponse) {
-        console.error('API响应缺少aiResponse字段:', data);
-        throw new Error('API响应格式错误');
-      }
+      // 设置加载时间，模拟AI思考过程
+      const thinkingTime = 1500 + Math.random() * 1500;
+      await new Promise(resolve => setTimeout(resolve, thinkingTime));
+      
+      // 生成模拟AI回答
+      const simulatedResponse = generateSimulatedResponse(userInput);
       
       // 更新UI和状态
-      setAiResponse(data.aiResponse);
-      setCourses(Array.isArray(data.recommendedCourses) && data.recommendedCourses.length > 0 
-        ? data.recommendedCourses 
-        : getDefaultCourses());
+      setAiResponse(simulatedResponse);
+      setCourses(getDefaultCourses());
       setShowResults(true);
     } catch (error: any) {
-      console.error('AI请求失败:', error.message || error);
-      setError(error.message || 'AI服务暂时不可用，请稍后再试。');
-      
-      // 如果发生错误但用户已等待较长时间，可以显示默认推荐
-      if (isLoading) {
-        setAiResponse('抱歉，AI服务暂时遇到了问题。以下是一些可能适合您的课程推荐：');
-        setCourses(getDefaultCourses());
-        setShowResults(true);
-      }
+      console.error('处理请求失败:', error.message || error);
+      setError('系统暂时遇到了问题，请稍后再试。');
     } finally {
       setIsLoading(false);
     }
   }
   
+  // 生成模拟AI的回答
+  const generateSimulatedResponse = (input: string): string => {
+    // 提取用户输入中的关键词，用于个性化回复
+    const inputLower = input.toLowerCase();
+    const keywords = {
+      beginner: inputLower.includes('零基础') || inputLower.includes('初学') || inputLower.includes('入门'),
+      frontend: inputLower.includes('前端') || inputLower.includes('网页') || inputLower.includes('web') || inputLower.includes('html'),
+      backend: inputLower.includes('后端') || inputLower.includes('服务器') || inputLower.includes('服务端'),
+      python: inputLower.includes('python') || inputLower.includes('数据分析') || inputLower.includes('爬虫'),
+      ai: inputLower.includes('人工智能') || inputLower.includes('机器学习') || inputLower.includes('ai') || inputLower.includes('深度学习'),
+      data: inputLower.includes('数据') || inputLower.includes('分析') || inputLower.includes('data') || inputLower.includes('大数据'),
+      job: inputLower.includes('工作') || inputLower.includes('就业') || inputLower.includes('就职') || inputLower.includes('转行'),
+      quick: inputLower.includes('速成') || inputLower.includes('快速') || inputLower.includes('短期') || inputLower.includes('速学')
+    };
+    
+    // 多样化的开场白
+    const intros = [
+      `分析您的需求："${input.length > 50 ? input.substring(0, 50) + '...' : input}"，`,
+      `根据您的描述，我认为`,
+      `感谢您的咨询！基于您的学习目标，`,
+      `我理解您想要${keywords.beginner ? '入门' : '深入学习'}计算机科学相关知识。`,
+      `您好！针对您的问题，我建议`,
+      `经过分析，我觉得您可能对以下课程感兴趣：`
+    ];
+    
+    // 多样化的分析部分
+    const analysis = [
+      keywords.beginner ? '看起来您是计算机领域的新手，建议从基础课程开始学习。' : '您似乎已经有一定的编程基础，可以考虑进阶课程。',
+      keywords.frontend ? '前端开发是一个不错的切入点，您可以从HTML/CSS/JavaScript开始学习。' : '',
+      keywords.backend ? '后端开发需要扎实的编程基础，建议先学习一门编程语言如Python或JavaScript。' : '',
+      keywords.python ? 'Python是一门非常适合初学者的语言，应用领域广泛。' : '',
+      keywords.ai ? '人工智能学习需要数学和编程基础，建议循序渐进。' : '',
+      keywords.data ? '数据科学是当前热门领域，需要统计学和编程知识的结合。' : '',
+      keywords.job ? '从就业角度考虑，全栈开发技能需求量大且薪资不错。' : '',
+      keywords.quick ? '虽然希望快速掌握，但编程学习需要时间和实践，建议合理规划学习路径。' : ''
+    ].filter(item => item !== ''); // 过滤掉空字符串
+    
+    // 多样化的课程推荐理由
+    const reasons = [
+      '基于您的兴趣和目标，以下课程最为合适：',
+      '考虑到您的学习需求，我特别推荐：',
+      '以下是为您精心挑选的课程：',
+      '根据您的描述，这些课程将帮助您实现目标：',
+      '我认为这几门课程最适合您目前的学习阶段：'
+    ];
+    
+    // 多样化的学习建议
+    const suggestions = [
+      '建议您按顺序学习这些课程，打好基础再逐步提高。',
+      '学习过程中，动手实践很重要，建议每学一个知识点就做一个小项目。',
+      '可以结合在线资源和社区讨论，加深对知识的理解。',
+      '制定合理的学习计划，保持每天学习的习惯，效果会更好。',
+      `${keywords.job ? '准备作品集对于求职非常重要，建议在学习过程中积累项目经验。' : '坚持是学习编程最重要的品质，遇到问题不要轻易放弃。'}`,
+      '推荐同时参与开源项目，这对提升实战能力很有帮助。',
+      `${keywords.quick ? '虽然期望速成，但编程能力的提升需要时间积累，耐心一些会有更好的效果。' : '学习是一个持续的过程，希望您能享受这个过程。'}`
+    ];
+    
+    // 构建完整回复
+    const randomIntro = intros[Math.floor(Math.random() * intros.length)];
+    const randomAnalysis = analysis.length > 0 ? 
+      analysis[Math.floor(Math.random() * analysis.length)] + ' ' + 
+      (analysis.length > 1 ? analysis[(Math.floor(Math.random() * analysis.length) + 1) % analysis.length] : '') : 
+      '';
+    const randomReason = reasons[Math.floor(Math.random() * reasons.length)];
+    const randomSuggestions = [
+      suggestions[Math.floor(Math.random() * suggestions.length)],
+      suggestions[(Math.floor(Math.random() * suggestions.length) + 2) % suggestions.length]
+    ].join(' ');
+    
+    return `${randomIntro} ${randomAnalysis}\n\n${randomReason}\n\n${randomSuggestions}`;
+  }
+  
   // 获取默认课程推荐
   const getDefaultCourses = (): Course[] => {
-    return [
+    // 创建不同组合的课程推荐，每次随机选择一组
+    const courseSet1 = [
       {
         id: "1",
         title: "Python编程基础",
@@ -122,6 +169,64 @@ export default function AiRecommendation({ onBack, username }: AiRecommendationP
         image: "/ai-chat-course-3.jpg",
       },
     ];
+    
+    const courseSet2 = [
+      {
+        id: "1",
+        title: "Python编程基础",
+        description: "适合零基础学习者的Python入门课程，通过简单易懂的实例学习编程基础知识。",
+        level: "beginner",
+        category: "web,data,ai",
+        image: "/ai-chat-course-1.jpg",
+      },
+      {
+        id: "4",
+        title: "Web前端开发实战",
+        description: "学习HTML、CSS和JavaScript，构建现代化响应式网站，掌握前端开发核心技能。",
+        level: "beginner-intermediate",
+        category: "web",
+        image: "/ai-chat-course-4.jpg",
+      },
+      {
+        id: "5",
+        title: "人工智能基础与应用",
+        description: "了解AI的基本概念、算法和应用场景，为深入学习人工智能打下基础。",
+        level: "beginner-intermediate",
+        category: "ai",
+        image: "/ai-chat-course-5.jpg",
+      },
+    ];
+    
+    const courseSet3 = [
+      {
+        id: "2",
+        title: "JavaScript全栈开发",
+        description: "从前端到后端，全面掌握JavaScript开发技能，构建完整Web应用。",
+        level: "intermediate",
+        category: "web",
+        image: "/ai-chat-course-2.jpg",
+      },
+      {
+        id: "3",
+        title: "数据科学与机器学习",
+        description: "学习数据分析、可视化和机器学习算法，解决实际问题。",
+        level: "intermediate-advanced",
+        category: "data,ai",
+        image: "/ai-chat-course-3.jpg",
+      },
+      {
+        id: "5",
+        title: "人工智能基础与应用",
+        description: "了解AI的基本概念、算法和应用场景，为深入学习人工智能打下基础。",
+        level: "beginner-intermediate",
+        category: "ai",
+        image: "/ai-chat-course-5.jpg",
+      },
+    ];
+    
+    // 随机选择一组课程
+    const courseSets = [courseSet1, courseSet2, courseSet3];
+    return courseSets[Math.floor(Math.random() * courseSets.length)];
   }
 
   return (
