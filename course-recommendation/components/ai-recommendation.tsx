@@ -6,20 +6,12 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
-import { ArrowLeft, Send, Sparkles, CheckCircle, Bot, ChevronRight } from "lucide-react"
+import { ArrowLeft, Send, Sparkles, CircleAlert, Bot, ChevronRight } from "lucide-react"
+import { Course } from "@/types/course"
 
 interface AiRecommendationProps {
   onBack: () => void
   username: string
-}
-
-type Course = {
-  id: string
-  title: string
-  description: string
-  level: string
-  category: string
-  image: string
 }
 
 export default function AiRecommendation({ onBack, username }: AiRecommendationProps) {
@@ -27,13 +19,17 @@ export default function AiRecommendation({ onBack, username }: AiRecommendationP
   const [isLoading, setIsLoading] = useState(false)
   const [showResults, setShowResults] = useState(false)
   const [aiResponse, setAiResponse] = useState("")
+  const [error, setError] = useState<string | null>(null)
+  const [courses, setCourses] = useState<Course[]>([])
 
   // 添加占位图像点击事件处理函数
   const handleImageClick = (courseId: string) => {
     const courseInfo = {
       "1": { title: "Python编程基础", image: "/ai-chat-course-1.jpg" },
       "2": { title: "JavaScript全栈开发", image: "/ai-chat-course-2.jpg" },
-      "3": { title: "数据科学与机器学习", image: "/ai-chat-course-3.jpg" }
+      "3": { title: "数据科学与机器学习", image: "/ai-chat-course-3.jpg" },
+      "4": { title: "Web前端开发实战", image: "/ai-chat-course-4.jpg" },
+      "5": { title: "人工智能基础与应用", image: "/ai-chat-course-5.jpg" }
     }
     
     if (courseId in courseInfo) {
@@ -42,48 +38,90 @@ export default function AiRecommendation({ onBack, username }: AiRecommendationP
     }
   }
 
-  // 模拟课程数据
-  const courses: Course[] = [
-    {
-      id: "1",
-      title: "Python编程基础",
-      description: "适合零基础学习者的Python入门课程，通过简单易懂的实例学习编程基础知识。",
-      level: "beginner",
-      category: "web,data,ai",
-      image: "/ai-chat-course-1.jpg",
-    },
-    {
-      id: "2",
-      title: "JavaScript全栈开发",
-      description: "从前端到后端，全面掌握JavaScript开发技能，构建完整Web应用。",
-      level: "intermediate",
-      category: "web",
-      image: "/ai-chat-course-2.jpg",
-    },
-    {
-      id: "3",
-      title: "数据科学与机器学习",
-      description: "学习数据分析、可视化和机器学习算法，解决实际问题。",
-      level: "intermediate-advanced",
-      category: "data,ai",
-      image: "/ai-chat-course-3.jpg",
-    },
-  ]
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!userInput.trim()) return
 
     setIsLoading(true)
+    setError(null)
 
-    // 模拟AI处理
-    setTimeout(() => {
-      setAiResponse(
-        `根据您的需求："${userInput}"，我们分析您可能对数据科学和人工智能领域感兴趣，并且已经有一定的编程基础。以下是为您精心推荐的课程：`,
-      )
-      setIsLoading(false)
-      setShowResults(true)
-    }, 1500)
+    try {
+      console.log('发送请求到AI API');
+      // 调用后端API
+      const response = await fetch('/api/ai', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userInput }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({
+          error: `服务器错误: ${response.status}`
+        }));
+        console.error('服务器返回错误:', errorData);
+        throw new Error(errorData.error || `服务器错误: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('收到AI响应');
+      
+      // 确保数据包含预期的字段
+      if (!data.aiResponse) {
+        console.error('API响应缺少aiResponse字段:', data);
+        throw new Error('API响应格式错误');
+      }
+      
+      // 更新UI和状态
+      setAiResponse(data.aiResponse);
+      setCourses(Array.isArray(data.recommendedCourses) && data.recommendedCourses.length > 0 
+        ? data.recommendedCourses 
+        : getDefaultCourses());
+      setShowResults(true);
+    } catch (error: any) {
+      console.error('AI请求失败:', error.message || error);
+      setError(error.message || 'AI服务暂时不可用，请稍后再试。');
+      
+      // 如果发生错误但用户已等待较长时间，可以显示默认推荐
+      if (isLoading) {
+        setAiResponse('抱歉，AI服务暂时遇到了问题。以下是一些可能适合您的课程推荐：');
+        setCourses(getDefaultCourses());
+        setShowResults(true);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }
+  
+  // 获取默认课程推荐
+  const getDefaultCourses = (): Course[] => {
+    return [
+      {
+        id: "1",
+        title: "Python编程基础",
+        description: "适合零基础学习者的Python入门课程，通过简单易懂的实例学习编程基础知识。",
+        level: "beginner",
+        category: "web,data,ai",
+        image: "/ai-chat-course-1.jpg",
+      },
+      {
+        id: "2",
+        title: "JavaScript全栈开发",
+        description: "从前端到后端，全面掌握JavaScript开发技能，构建完整Web应用。",
+        level: "intermediate",
+        category: "web",
+        image: "/ai-chat-course-2.jpg",
+      },
+      {
+        id: "3",
+        title: "数据科学与机器学习",
+        description: "学习数据分析、可视化和机器学习算法，解决实际问题。",
+        level: "intermediate-advanced",
+        category: "data,ai",
+        image: "/ai-chat-course-3.jpg",
+      },
+    ];
   }
 
   return (
@@ -105,6 +143,13 @@ export default function AiRecommendation({ onBack, username }: AiRecommendationP
         <div className="w-10"></div> {/* 占位，保持布局平衡 */}
       </div>
 
+      {error && (
+        <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/30 rounded-lg flex items-center gap-2 text-red-700 dark:text-red-300">
+          <CircleAlert className="h-4 w-4 flex-shrink-0" />
+          <p className="text-sm">{error}</p>
+        </div>
+      )}
+
       {!showResults ? (
         <Card className="shadow-lg border bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-purple-100 dark:border-purple-900/30">
           <CardContent className="pt-4 px-4">
@@ -118,6 +163,11 @@ export default function AiRecommendation({ onBack, username }: AiRecommendationP
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <h2 className="text-lg font-medium text-purple-700 dark:text-purple-300 mb-3">告诉AI您的目标，定制专属逆袭计划！</h2>
+                <div className="flex items-center mb-2">
+                  <div className="flex-shrink-0 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded-md">
+                    <span className="font-medium">注意：</span> 目前仅支持计算机科学方向的课程
+                  </div>
+                </div>
                 <p className="text-gray-600 dark:text-gray-300 mb-3 text-xs bg-purple-50 dark:bg-purple-900/20 p-2 rounded-lg border border-purple-100 dark:border-purple-800/30">
                   <span className="font-medium">提示：</span> 您可以像聊天一样自然地描述您的需求，例如：
                   "我想转行数据分析，有哪些必学的课程？" 或 "我有3个月时间，如何从零开始学习前端开发？"
@@ -225,7 +275,7 @@ export default function AiRecommendation({ onBack, username }: AiRecommendationP
                       <h3 className="font-bold text-base mb-1 text-purple-700 dark:text-purple-300">{course.title}</h3>
                       <p className="text-gray-600 dark:text-gray-300 text-xs mb-2">{course.description}</p>
                       
-                      {/* 添加推荐理由 */}
+                      {/* 添加推荐理由 - 基于课程类别生成 */}
                       <div className="bg-purple-50 dark:bg-purple-900/10 rounded-md p-2 mb-3">
                         <p className="text-xs text-purple-700 dark:text-purple-300 flex items-center">
                           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
@@ -241,9 +291,9 @@ export default function AiRecommendation({ onBack, username }: AiRecommendationP
                             <path d="m19.4 4.6-.7.7"></path>
                           </svg>
                           <span>
-                            {course.id === "1" && "匹配您的零基础背景，适合开始编程学习之旅"}
-                            {course.id === "2" && "根据您描述的Web开发兴趣推荐"}
-                            {course.id === "3" && "基于您对数据分析的学习目标精选"}
+                            {course.category.includes("web") && "适合Web开发学习路径"}
+                            {course.category.includes("data") && !course.category.includes("web") && "适合数据分析与处理学习"}
+                            {course.category.includes("ai") && !course.category.includes("data") && !course.category.includes("web") && "适合人工智能学习方向"}
                           </span>
                         </p>
                       </div>
