@@ -78,6 +78,9 @@ export default function CommunityPage() {
             <Link href="/courses" className="transition-colors hover:text-primary-400 py-1 border-b-2 border-transparent hover:border-primary-400">
               在线课程
             </Link>
+            <Link href="/pomodoro" className="transition-colors hover:text-primary-400 py-1 border-b-2 border-transparent hover:border-primary-400">
+              <Clock className="inline-block mr-1 h-4 w-4" /> 番茄钟
+            </Link>
             {process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL ? (
               <Link href={process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL} className="transition-colors hover:text-primary-400 py-1 border-b-2 border-transparent hover:border-primary-400">
                 个人学习路线
@@ -92,6 +95,11 @@ export default function CommunityPage() {
           </nav>
           
           <div className="flex items-center space-x-4">
+            <Link href="/pomodoro" className="md:hidden">
+              <Button variant="ghost" size="icon" className="rounded-full text-gray-400 hover:text-white">
+                <Clock className="h-5 w-5" />
+              </Button>
+            </Link>
             <Button variant="ghost" size="icon" className="rounded-full text-gray-400 hover:text-white">
               <Search className="h-5 w-5" />
               <span className="sr-only">搜索</span>

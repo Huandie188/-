@@ -90,6 +90,9 @@ export default function Home() {
             <Link href="/courses" className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
               在线课程
             </Link>
+            <Link href="/pomodoro" className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
+              <Clock className="inline-block mr-1 h-4 w-4" /> 番茄钟
+            </Link>
             {process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL ? (
               <Link href={process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL} className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
                 个人学习路线
@@ -106,6 +109,11 @@ export default function Home() {
             {!isLoading && (
               isLoggedIn ? (
                 <>
+                  <Link href="/pomodoro" className="md:hidden">
+                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary-50 text-primary-700">
+                      <Clock className="h-5 w-5" />
+                    </Button>
+                  </Link>
                   <Link href={process.env.NEXT_PUBLIC_ADMIN_URL || '#'}>
                     <Button variant="ghost" className="rounded-full hover:bg-primary-50 text-primary-700">后台管理</Button>
                   </Link>
@@ -114,9 +122,16 @@ export default function Home() {
                   </Button>
                 </>
               ) : (
-                <Link href={process.env.NEXT_PUBLIC_AUTH_URL || '#'}>
-                  <Button className="rounded-full shadow-subtle">登录/注册</Button>
-                </Link>
+                <>
+                  <Link href="/pomodoro" className="md:hidden">
+                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary-50 text-primary-700">
+                      <Clock className="h-5 w-5" />
+                    </Button>
+                  </Link>
+                  <Link href={process.env.NEXT_PUBLIC_AUTH_URL || '#'}>
+                    <Button className="rounded-full shadow-subtle">登录/注册</Button>
+                  </Link>
+                </>
               )
             )}
           </div>
@@ -161,7 +176,7 @@ export default function Home() {
                       </h1>
                       
                       <p className="text-xl leading-relaxed text-muted-foreground max-w-lg">
-                        基于尖端AI技术的个性化学习平台，今日已优化<span className="font-semibold text-foreground">3,214</span>门课程，
+                        基于尖端AI技术的个性化学习平台，今日已优化<span className="font-semibold text-foreground">32,145</span>门课程，
                         解决<span className="font-semibold text-foreground">72</span>项技能缺口。
                       </p>
                     </div>
@@ -185,7 +200,7 @@ export default function Home() {
                       <div className="relative">
                         <div className="absolute -inset-1 bg-gradient-to-r from-primary-100 to-violet-100 dark:from-primary-900/20 dark:to-violet-900/20 rounded-lg blur opacity-50"></div>
                         <div className="relative space-y-1 bg-white dark:bg-gray-900 p-3 rounded-lg border border-gray-100 dark:border-gray-800">
-                          <h4 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary-600 to-violet-500 bg-clip-text text-transparent">3,214</h4>
+                          <h4 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary-600 to-violet-500 bg-clip-text text-transparent">32,145</h4>
                           <p className="text-xs md:text-sm text-muted-foreground">精选课程</p>
                         </div>
                       </div>
@@ -199,7 +214,7 @@ export default function Home() {
                       <div className="relative">
                         <div className="absolute -inset-1 bg-gradient-to-r from-blue-100 to-primary-100 dark:from-blue-900/20 dark:to-primary-900/20 rounded-lg blur opacity-50"></div>
                         <div className="relative space-y-1 bg-white dark:bg-gray-900 p-3 rounded-lg border border-gray-100 dark:border-gray-800">
-                          <h4 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 to-primary-600 bg-clip-text text-transparent">2000+</h4>
+                          <h4 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 to-primary-600 bg-clip-text text-transparent">20000+</h4>
                           <p className="text-xs md:text-sm text-muted-foreground">活跃学习者</p>
                         </div>
                       </div>
@@ -772,7 +787,7 @@ export default function Home() {
                   <div className="grid grid-cols-3 gap-4">
                     <div className="space-y-2 text-center">
                       <p className="text-xs uppercase tracking-wider text-gray-500">活跃学习者</p>
-                      <p className="text-2xl font-mono text-blue-400 font-bold tracking-widest">2000+</p>
+                      <p className="text-2xl font-mono text-blue-400 font-bold tracking-widest">20000+</p>
                     </div>
                     <div className="space-y-2 text-center">
                       <p className="text-xs uppercase tracking-wider text-gray-500">知识流动路径</p>

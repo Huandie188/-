@@ -588,6 +588,9 @@ export default function CoursesPage() {
               <Link href="/courses" className="transition-colors text-primary-600 py-1 border-b-2 border-primary-500">
                 在线课程
               </Link>
+              <Link href="/pomodoro" className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
+                <Clock className="inline-block mr-1 h-4 w-4" /> 番茄钟
+              </Link>
               {process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL ? (
                 <Link href={process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL} className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
                   个人学习路线
@@ -602,6 +605,11 @@ export default function CoursesPage() {
             </nav>
             
             <div className="flex items-center space-x-4">
+              <Link href="/pomodoro" className="md:hidden">
+                <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary-50 text-primary-700">
+                  <Clock className="h-5 w-5" />
+                </Button>
+              </Link>
               <Button variant="ghost" size="icon" className="rounded-full">
                 <User className="h-5 w-5" />
                 <span className="sr-only">用户</span>

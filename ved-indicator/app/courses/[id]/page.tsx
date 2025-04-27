@@ -324,6 +324,12 @@ export default function CourseDetailPage({ params }: { params: any }) {
             返回课程列表
           </Button>
           <div className="flex items-center gap-4">
+            <Link href="/pomodoro">
+              <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary-50 text-primary-700">
+                <Clock className="h-5 w-5" />
+                <span className="sr-only">番茄钟</span>
+              </Button>
+            </Link>
             <Button variant="ghost" size="icon" onClick={toggleTheme}>
               {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
