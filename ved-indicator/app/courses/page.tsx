@@ -28,7 +28,25 @@ import {
   BarChart,
   Tag,
   Sliders,
-  Bookmark
+  Bookmark,
+  Star,
+  ArrowUpDown,
+  Calculator,
+  Calendar,
+  CreditCard,
+  Smile,
+  Award,
+  Users,
+  Zap,
+  TrendingUp,
+  BookOpen,
+  GraduationCap,
+  Layout,
+  BrainCircuit,
+  Compass,
+  Cpu,
+  Wallet,
+  Building2
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -37,10 +55,11 @@ import { Slider } from "@/components/ui/slider"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Switch } from "@/components/ui/switch"
 import { Progress } from "@/components/ui/progress"
+import { TrendChart } from "@/components/TrendChart"
 
 // 定义课程类型接口
 interface Course {
@@ -632,9 +651,9 @@ export default function CoursesPage() {
           </div>
         </header>
 
-        <main className="container pt-24 pb-16 flex flex-col lg:flex-row gap-6">
-          {/* 左侧筛选面板 - 在移动端可收起 */}
-          <aside className="w-full lg:w-1/5 space-y-6">
+        <main className="container pt-20 pb-12 flex flex-col lg:flex-row gap-4">
+          {/* 左侧筛选面板布局优化 */}
+          <aside className="w-full lg:w-1/5 space-y-4">
             <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-5">
               <h2 className="text-lg font-semibold mb-4">多模态搜索</h2>
               
@@ -802,31 +821,10 @@ export default function CoursesPage() {
                 </div>
               )}
             </div>
-            
-            <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-5">
-              <h2 className="text-lg font-semibold mb-4">动态维度筛选</h2>
-              
-              {filterCategories.map((category, index) => (
-                <div key={index} className="mb-4">
-                  <h3 className="text-sm font-medium mb-2">{category.name}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {category.options.map((option, optionIndex) => (
-                      <Badge 
-                        key={optionIndex} 
-                        variant="outline" 
-                        className="cursor-pointer bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700"
-                      >
-                        {option}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
           </aside>
           
-          {/* 中间课程列表 */}
-          <div className="w-full lg:w-3/5 space-y-6">
+          {/* 中间课程列表区域优化 */}
+          <div className="w-full lg:w-3/5 space-y-4">
             <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-5">
               <div className="flex justify-between items-center mb-4">
                 <h1 className="text-2xl font-bold">探索课程</h1>
@@ -1157,8 +1155,8 @@ export default function CoursesPage() {
             </div>
           </div>
           
-          {/* 右侧区域 */}
-          <div className="w-full lg:w-1/5 space-y-6">
+          {/* 右侧区域优化 */}
+          <div className="w-full lg:w-1/5 space-y-4">
             {/* 动态维度筛选面板 */}
             <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-5 sticky top-24">
               <div className="flex justify-between items-center mb-4">
@@ -1384,6 +1382,886 @@ export default function CoursesPage() {
             </div>
           </div>
         </main>
+
+        {/* 数据可视化区域 - 减少留白、优化布局 */}
+        <section className="container pb-12 space-y-5">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold">数据洞察与市场趋势</h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+            {/* 技术趋势热度图 - OpenAI风格优化 */}
+            <Card className="md:col-span-8 lg:col-span-7 overflow-hidden border border-gray-100 dark:border-gray-800 shadow-md">
+              <CardHeader className="bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 py-3 px-5">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <div className="h-6 w-1 bg-gradient-to-b from-blue-400 to-indigo-500 rounded-full"></div>
+                    <h3 className="text-lg font-medium text-slate-800 dark:text-slate-200">技术趋势热度分析</h3>
+                  </div>
+                  <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700/30 font-normal">
+                    实时数据
+                  </Badge>
+                </div>
+              </CardHeader>
+              
+              <CardContent className="p-5">
+                <div className="flex flex-col md:flex-row gap-4">
+                  <div className="flex-1">
+                    {/* 使用新的TrendChart组件 */}
+                    <TrendChart />
+                  </div>
+                  <div className="w-full md:w-60 shrink-0 space-y-3">
+                    <h4 className="text-sm font-medium border-b pb-1 mb-2">热度榜Top 5</h4>
+                    <div className="space-y-2.5">
+                      <div className="space-y-1.5">
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="flex items-center">
+                            <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
+                            大语言模型
+                          </span>
+                          <span className="font-medium text-blue-600 dark:text-blue-400">92%</span>
+                        </div>
+                        <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+                          <div className="h-full bg-blue-500 rounded-full" style={{ width: '92%' }}></div>
+                        </div>
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="flex items-center">
+                            <div className="w-2 h-2 rounded-full bg-purple-500 mr-2"></div>
+                            AI应用开发
+                          </span>
+                          <span className="font-medium text-purple-600 dark:text-purple-400">87%</span>
+                        </div>
+                        <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+                          <div className="h-full bg-purple-500 rounded-full" style={{ width: '87%' }}></div>
+                        </div>
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="flex items-center">
+                            <div className="w-2 h-2 rounded-full bg-emerald-500 mr-2"></div>
+                            云原生开发
+                          </span>
+                          <span className="font-medium text-emerald-600 dark:text-emerald-400">76%</span>
+                        </div>
+                        <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+                          <div className="h-full bg-emerald-500 rounded-full" style={{ width: '76%' }}></div>
+                        </div>
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="flex items-center">
+                            <div className="w-2 h-2 rounded-full bg-amber-500 mr-2"></div>
+                            Web3/区块链
+                          </span>
+                          <span className="font-medium text-amber-600 dark:text-amber-400">65%</span>
+                        </div>
+                        <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+                          <div className="h-full bg-amber-500 rounded-full" style={{ width: '65%' }}></div>
+                        </div>
+                      </div>
+                      <div className="space-y-1.5">
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="flex items-center">
+                            <div className="w-2 h-2 rounded-full bg-red-500 mr-2"></div>
+                            网络安全
+                          </span>
+                          <span className="font-medium text-red-600 dark:text-red-400">61%</span>
+                        </div>
+                        <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
+                          <div className="h-full bg-red-500 rounded-full" style={{ width: '61%' }}></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            {/* 技能雷达图 */}
+            <Card className="md:col-span-4 lg:col-span-5 overflow-hidden border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-all duration-300">
+              <CardHeader className="bg-gradient-to-r from-green-50 to-teal-50 dark:from-green-950/40 dark:to-teal-950/40 py-3 px-4">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-semibold">技能需求雷达</h3>
+                  <Badge variant="outline" className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                    实时更新
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-3 pb-4 px-4">
+                <div className="h-72 w-full relative">
+                  {/* 技能雷达图可视化 */}
+                  <div className="absolute inset-0 rounded-lg flex items-center justify-center">
+                    <div className="relative w-full h-full">
+                      {/* 雷达图主体 */}
+                      <svg viewBox="0 0 400 400" className="w-full h-full max-w-[500px] max-h-[500px] mx-auto">
+                        {/* 背景渐变 */}
+                        <defs>
+                          <radialGradient id="radarBackground" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                            <stop offset="0%" stopColor="rgba(16, 185, 129, 0.05)" />
+                            <stop offset="100%" stopColor="rgba(20, 184, 166, 0.01)" />
+                          </radialGradient>
+                          
+                          {/* 技能区域渐变 */}
+                          <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor="rgba(16, 185, 129, 0.2)" />
+                            <stop offset="100%" stopColor="rgba(16, 185, 129, 0.05)" />
+                          </linearGradient>
+                          
+                          {/* 技能趋势渐变 */}
+                          <linearGradient id="trendGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor="rgba(56, 189, 248, 0.2)" />
+                            <stop offset="100%" stopColor="rgba(56, 189, 248, 0.05)" />
+                          </linearGradient>
+                        </defs>
+                        
+                        {/* 背景圆和网格 */}
+                        <circle cx="200" cy="200" r="180" fill="url(#radarBackground)" />
+                        {[40, 80, 120, 160].map((radius, index) => (
+                          <circle 
+                            key={`circle-${index}`} 
+                            cx="200" 
+                            cy="200" 
+                            r={radius} 
+                            fill="none" 
+                            stroke="rgba(148, 163, 184, 0.15)" 
+                            strokeWidth="1" 
+                            className="dark:stroke-slate-700/30"
+                          />
+                        ))}
+                        
+                        {/* 轴线 - 8个方向 */}
+                        {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, index) => {
+                          const radian = (angle * Math.PI) / 180;
+                          const x2 = 200 + 180 * Math.cos(radian);
+                          const y2 = 200 + 180 * Math.sin(radian);
+                          return (
+                            <line 
+                              key={`axis-${index}`}
+                              x1="200" 
+                              y1="200" 
+                              x2={x2} 
+                              y2={y2} 
+                              stroke="rgba(148, 163, 184, 0.15)" 
+                              strokeWidth="1"
+                              className="dark:stroke-slate-700/30"
+                            />
+                          );
+                        })}
+                        
+                        {/* 当前技能水平多边形 */}
+                        <polygon 
+                          points="200,50 300,90 330,200 260,300 140,300 70,200 100,90" 
+                          fill="url(#areaGradient)" 
+                          stroke="rgba(16, 185, 129, 0.7)" 
+                          strokeWidth="1.5"
+                          strokeLinejoin="round"
+                          className="transition-all duration-500 ease-out"
+                        />
+                        
+                        {/* 行业趋势多边形 */}
+                        <polygon 
+                          points="200,30 320,80 350,200 280,330 120,330 50,200 80,70" 
+                          fill="none" 
+                          stroke="rgba(56, 189, 248, 0.7)" 
+                          strokeWidth="1.5" 
+                          strokeDasharray="3,3"
+                          strokeLinejoin="round"
+                          className="transition-all duration-500 ease-out"
+                        />
+                        
+                        {/* 技能数据点 - 当前水平 */}
+                        <circle cx="200" cy="50" r="4" fill="white" stroke="rgba(16, 185, 129, 0.9)" strokeWidth="1.5" />
+                        <circle cx="300" cy="90" r="4" fill="white" stroke="rgba(16, 185, 129, 0.9)" strokeWidth="1.5" />
+                        <circle cx="330" cy="200" r="4" fill="white" stroke="rgba(16, 185, 129, 0.9)" strokeWidth="1.5" />
+                        <circle cx="260" cy="300" r="4" fill="white" stroke="rgba(16, 185, 129, 0.9)" strokeWidth="1.5" />
+                        <circle cx="140" cy="300" r="4" fill="white" stroke="rgba(16, 185, 129, 0.9)" strokeWidth="1.5" />
+                        <circle cx="70" cy="200" r="4" fill="white" stroke="rgba(16, 185, 129, 0.9)" strokeWidth="1.5" />
+                        <circle cx="100" cy="90" r="4" fill="white" stroke="rgba(16, 185, 129, 0.9)" strokeWidth="1.5" />
+                        
+                        {/* 技能标签 - 优化位置和样式 */}
+                        <g className="skills-labels">
+                          {/* Python */}
+                          <g className="skill-label" transform="translate(200, 20)">
+                            <rect x="-40" y="-16" width="80" height="22" rx="4" fill="white" className="dark:fill-slate-800" fillOpacity="0.9" />
+                            <text x="0" y="0" textAnchor="middle" dominantBaseline="middle" fontSize="12" fontWeight="500" fill="currentColor">Python</text>
+                          </g>
+                          
+                          {/* React */}
+                          <g className="skill-label" transform="translate(340, 90)">
+                            <rect x="-40" y="-16" width="80" height="22" rx="4" fill="white" className="dark:fill-slate-800" fillOpacity="0.9" />
+                            <text x="0" y="0" textAnchor="middle" dominantBaseline="middle" fontSize="12" fontWeight="500" fill="currentColor">React</text>
+                          </g>
+                          
+                          {/* AWS */}
+                          <g className="skill-label" transform="translate(370, 200)">
+                            <rect x="-40" y="-16" width="80" height="22" rx="4" fill="white" className="dark:fill-slate-800" fillOpacity="0.9" />
+                            <text x="0" y="0" textAnchor="middle" dominantBaseline="middle" fontSize="12" fontWeight="500" fill="currentColor">AWS</text>
+                          </g>
+                          
+                          {/* TensorFlow */}
+                          <g className="skill-label" transform="translate(260, 340)">
+                            <rect x="-50" y="-16" width="100" height="22" rx="4" fill="white" className="dark:fill-slate-800" fillOpacity="0.9" />
+                            <text x="0" y="0" textAnchor="middle" dominantBaseline="middle" fontSize="12" fontWeight="500" fill="currentColor">TensorFlow</text>
+                          </g>
+                          
+                          {/* Node.js */}
+                          <g className="skill-label" transform="translate(100, 340)">
+                            <rect x="-40" y="-16" width="80" height="22" rx="4" fill="white" className="dark:fill-slate-800" fillOpacity="0.9" />
+                            <text x="0" y="0" textAnchor="middle" dominantBaseline="middle" fontSize="12" fontWeight="500" fill="currentColor">Node.js</text>
+                          </g>
+                          
+                          {/* Go */}
+                          <g className="skill-label" transform="translate(30, 200)">
+                            <rect x="-30" y="-16" width="60" height="22" rx="4" fill="white" className="dark:fill-slate-800" fillOpacity="0.9" />
+                            <text x="0" y="0" textAnchor="middle" dominantBaseline="middle" fontSize="12" fontWeight="500" fill="currentColor">Go</text>
+                          </g>
+                          
+                          {/* Vue */}
+                          <g className="skill-label" transform="translate(60, 90)">
+                            <rect x="-30" y="-16" width="60" height="22" rx="4" fill="white" className="dark:fill-slate-800" fillOpacity="0.9" />
+                            <text x="0" y="0" textAnchor="middle" dominantBaseline="middle" fontSize="12" fontWeight="500" fill="currentColor">Vue</text>
+                          </g>
+                        </g>
+                        
+                        {/* 图例 */}
+                        <g transform="translate(320, 20)">
+                          <rect x="-80" y="0" width="160" height="65" rx="6" fill="white" fillOpacity="0.9" className="dark:fill-slate-800/90" />
+                          
+                          <g transform="translate(0, 15)">
+                            <rect x="-70" y="-8" width="16" height="16" rx="2" fill="url(#areaGradient)" stroke="rgba(16, 185, 129, 0.7)" strokeWidth="1" />
+                            <text x="-45" y="0" dominantBaseline="middle" fontSize="11" fill="currentColor">当前技能水平</text>
+                          </g>
+                          
+                          <g transform="translate(0, 40)">
+                            <rect x="-70" y="-8" width="16" height="16" rx="2" fill="none" stroke="rgba(56, 189, 248, 0.7)" strokeWidth="1" strokeDasharray="3,3" />
+                            <text x="-45" y="0" dominantBaseline="middle" fontSize="11" fill="currentColor">行业趋势需求</text>
+                          </g>
+                        </g>
+                      </svg>
+                      
+                      {/* 交互式提示 */}
+                      <div className="absolute bottom-2 right-2 text-xs text-slate-500 dark:text-slate-400 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-md px-2 py-1 shadow-sm">
+                        <div className="flex items-center gap-1">
+                          <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11 17H13V11H11V17ZM12 9C12.2833 9 12.5208 8.90417 12.7125 8.7125C12.9042 8.52083 13 8.28333 13 8C13 7.71667 12.9042 7.47917 12.7125 7.2875C12.5208 7.09583 12.2833 7 12 7C11.7167 7 11.4792 7.09583 11.2875 7.2875C11.0958 7.47917 11 7.71667 11 8C11 8.28333 11.0958 8.52083 11.2875 8.7125C11.4792 8.90417 11.7167 9 12 9ZM12 22C10.6167 22 9.31667 21.7375 8.1 21.2125C6.88333 20.6875 5.825 19.975 4.925 19.075C4.025 18.175 3.3125 17.1167 2.7875 15.9C2.2625 14.6833 2 13.3833 2 12C2 10.6167 2.2625 9.31667 2.7875 8.1C3.3125 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.3125 8.1 2.7875C9.31667 2.2625 10.6167 2 12 2C13.3833 2 14.6833 2.2625 15.9 2.7875C17.1167 3.3125 18.175 4.025 19.075 4.925C19.975 5.825 20.6875 6.88333 21.2125 8.1C21.7375 9.31667 22 10.6167 22 12C22 13.3833 21.7375 14.6833 21.2125 15.9C20.6875 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6875 15.9 21.2125C14.6833 21.7375 13.3833 22 12 22Z" fill="currentColor"/>
+                          </svg>
+                          <span>悬停在技能上查看详情</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-4 grid grid-cols-3 gap-2">
+                  <div className="bg-gradient-to-r from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 rounded-lg p-3 text-center">
+                    <h4 className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">市场需求增速</h4>
+                    <p className="text-2xl font-bold text-teal-600 dark:text-teal-400">+86%</p>
+                  </div>
+                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-3 text-center">
+                    <h4 className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">技能覆盖率</h4>
+                    <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">72%</p>
+                  </div>
+                  <div className="bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 rounded-lg p-3 text-center">
+                    <h4 className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">薪资增长潜力</h4>
+                    <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">58%</p>
+                  </div>
+                </div>
+                
+                <div className="mt-4 flex flex-wrap gap-1 justify-center">
+                  <div className="bg-teal-100 text-teal-800 dark:bg-teal-900/40 dark:text-teal-400 px-2 py-1 rounded-full text-xs">
+                    Python +128%
+                  </div>
+                  <div className="bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-400 px-2 py-1 rounded-full text-xs">
+                    React +85%
+                  </div>
+                  <div className="bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-400 px-2 py-1 rounded-full text-xs">
+                    AWS +67%
+                  </div>
+                  <div className="bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-400 px-2 py-1 rounded-full text-xs">
+                    TensorFlow +92%
+                  </div>
+                  <div className="bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-400 px-2 py-1 rounded-full text-xs">
+                    Go +46%
+                  </div>
+                  <div className="bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-400 px-2 py-1 rounded-full text-xs">
+                    Vue +53%
+                  </div>
+                  <div className="bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-400 px-2 py-1 rounded-full text-xs">
+                    Node.js +79%
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* 就业市场前景 */}
+            <Card className="md:col-span-6 overflow-hidden border border-gray-100 dark:border-gray-800 shadow-md">
+              <CardHeader className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-950/40 dark:to-pink-950/40 py-3 px-4">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-semibold">就业市场前景</h3>
+                  <div className="text-xs text-purple-600 font-medium">
+                    北京地区
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-3 pb-4 px-4">
+                <div className="h-64 w-full relative">
+                  {/* 就业市场数据可视化 */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-violet-500/5 to-pink-500/5 rounded-lg p-2">
+                    <div className="h-full flex flex-col">
+                      <div className="text-xs text-gray-500 mb-3 font-medium text-center">北京地区IT相关职位薪资分布</div>
+                      
+                      <div className="flex-1 flex flex-col space-y-3">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-28 text-right text-xs">AI工程师</div>
+                          <div className="flex-1 h-6 bg-gray-100 dark:bg-gray-800 rounded-sm relative">
+                            <div className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-sm" style={{ width: '80%' }}></div>
+                            <div className="absolute inset-y-0 flex items-center justify-end right-2 text-xs font-medium">
+                              ¥35K-55K
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <div className="w-28 text-right text-xs">全栈开发工程师</div>
+                          <div className="flex-1 h-6 bg-gray-100 dark:bg-gray-800 rounded-sm relative">
+                            <div className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-sm" style={{ width: '70%' }}></div>
+                            <div className="absolute inset-y-0 flex items-center justify-end right-2 text-xs font-medium">
+                              ¥25K-45K
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <div className="w-28 text-right text-xs">数据科学家</div>
+                          <div className="flex-1 h-6 bg-gray-100 dark:bg-gray-800 rounded-sm relative">
+                            <div className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-sm" style={{ width: '75%' }}></div>
+                            <div className="absolute inset-y-0 flex items-center justify-end right-2 text-xs font-medium">
+                              ¥30K-50K
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <div className="w-28 text-right text-xs">DevOps工程师</div>
+                          <div className="flex-1 h-6 bg-gray-100 dark:bg-gray-800 rounded-sm relative">
+                            <div className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-sm" style={{ width: '65%' }}></div>
+                            <div className="absolute inset-y-0 flex items-center justify-end right-2 text-xs font-medium">
+                              ¥20K-40K
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <div className="w-28 text-right text-xs">前端开发工程师</div>
+                          <div className="flex-1 h-6 bg-gray-100 dark:bg-gray-800 rounded-sm relative">
+                            <div className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-sm" style={{ width: '60%' }}></div>
+                            <div className="absolute inset-y-0 flex items-center justify-end right-2 text-xs font-medium">
+                              ¥18K-35K
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <div className="w-28 text-right text-xs">后端开发工程师</div>
+                          <div className="flex-1 h-6 bg-gray-100 dark:bg-gray-800 rounded-sm relative">
+                            <div className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-400 to-pink-400 rounded-sm" style={{ width: '63%' }}></div>
+                            <div className="absolute inset-y-0 flex items-center justify-end right-2 text-xs font-medium">
+                              ¥20K-38K
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="text-xs text-gray-500 mt-3 text-center">
+                        数据来源：2024年Q2招聘平台统计 | 更新时间：2024-06-01
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-3 grid grid-cols-3 gap-2">
+                  <div className="border rounded-lg p-2 text-center">
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">平均薪资</p>
+                    <p className="text-lg font-bold text-purple-600">¥28.5K</p>
+                    <p className="text-xs text-green-600">↑ 12% 同比</p>
+                  </div>
+                  <div className="border rounded-lg p-2 text-center">
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">岗位数量</p>
+                    <p className="text-lg font-bold text-purple-600">12,508</p>
+                    <p className="text-xs text-green-600">↑ 8% 环比</p>
+                  </div>
+                  <div className="border rounded-lg p-2 text-center">
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">竞争指数</p>
+                    <p className="text-lg font-bold text-amber-600">3.6</p>
+                    <p className="text-xs text-amber-600">中等竞争</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* 互动学习路径可视化 */}
+            <Card className="md:col-span-6 overflow-hidden border border-gray-100 dark:border-gray-800 shadow-md">
+              <CardHeader className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/40 py-3 px-4">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-semibold">AI推荐学习路径</h3>
+                  <div className="text-xs bg-white/80 dark:bg-gray-800/80 px-2 py-1 rounded-md font-medium">
+                    AI工程师
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-3 pb-4 px-4">
+                <div className="h-64 w-full relative">
+                  {/* AI学习路径可视化 */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-amber-500/5 via-orange-500/5 to-red-500/5 rounded-lg p-3">
+                    <div className="h-full flex flex-col">
+                      <div className="text-center text-xs text-gray-600 dark:text-gray-400 mb-3 font-semibold">AI工程师学习路径图谱</div>
+                      
+                      <div className="relative flex-1 overflow-hidden">
+                        {/* 主干线路 */}
+                        <div className="absolute top-8 left-0 right-0 h-2 bg-gradient-to-r from-amber-300 via-orange-400 to-red-500 rounded-full"></div>
+                        
+                        {/* 阶段节点 - 入门 */}
+                        <div className="absolute top-0 left-0 sm:left-4 md:left-6 w-[28%] max-w-28">
+                          <div className="flex flex-col items-center">
+                            <div className="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-900/30 border-2 border-amber-400 flex items-center justify-center">
+                              <div className="text-amber-600 dark:text-amber-400 text-xs font-medium text-center">入门</div>
+                            </div>
+                            <div className="mt-3 space-y-1.5 w-full">
+                              <div className="bg-white dark:bg-gray-800 text-xs py-1 px-2 rounded-md shadow-sm border border-gray-200 dark:border-gray-700">
+                                Python基础
+                              </div>
+                              <div className="bg-white dark:bg-gray-800 text-xs py-1 px-2 rounded-md shadow-sm border border-gray-200 dark:border-gray-700">
+                                数据结构
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* 阶段节点 - 进阶 */}
+                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[28%] max-w-28">
+                          <div className="flex flex-col items-center">
+                            <div className="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900/30 border-2 border-orange-400 flex items-center justify-center">
+                              <div className="text-orange-600 dark:text-orange-400 text-xs font-medium text-center">进阶</div>
+                            </div>
+                            <div className="mt-3 space-y-1.5 w-full">
+                              <div className="bg-white dark:bg-gray-800 text-xs py-1 px-2 rounded-md shadow-sm border border-gray-200 dark:border-gray-700">
+                                机器学习
+                              </div>
+                              <div className="bg-white dark:bg-gray-800 text-xs py-1 px-2 rounded-md shadow-sm border border-gray-200 dark:border-gray-700 relative">
+                                深度学习
+                                <div className="absolute -right-1 -top-1 w-3 h-3 bg-blue-500 rounded-full border border-white dark:border-gray-800"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* 阶段节点 - 专业 */}
+                        <div className="absolute top-0 right-0 sm:right-4 md:right-6 w-[28%] max-w-28">
+                          <div className="flex flex-col items-center">
+                            <div className="w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/30 border-2 border-red-400 flex items-center justify-center">
+                              <div className="text-red-600 dark:text-red-400 text-xs font-medium text-center">专业</div>
+                            </div>
+                            <div className="mt-3 space-y-1.5 w-full">
+                              <div className="bg-white dark:bg-gray-800 text-xs py-1 px-2 rounded-md shadow-sm border border-gray-200 dark:border-gray-700 relative">
+                                LLM应用开发
+                                <div className="absolute -right-1 -top-1 w-3 h-3 bg-green-500 rounded-full border border-white dark:border-gray-800"></div>
+                              </div>
+                              <div className="bg-white dark:bg-gray-800 text-xs py-1 px-2 rounded-md shadow-sm border border-gray-200 dark:border-gray-700">
+                                模型微调
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* 下方系列课程 */}
+                        <div className="absolute bottom-0 inset-x-0 grid grid-cols-3 gap-2">
+                          <div className="flex flex-col">
+                            <div className="text-xs text-gray-500 font-medium mb-1.5">基础知识</div>
+                            <div className="flex flex-col space-y-1.5">
+                              <div className="bg-amber-50 dark:bg-amber-900/10 text-[10px] py-1 px-1.5 rounded border border-amber-200 dark:border-amber-800/30 truncate">
+                                Python基础编程
+                              </div>
+                              <div className="bg-amber-50 dark:bg-amber-900/10 text-[10px] py-1 px-1.5 rounded border border-amber-200 dark:border-amber-800/30 truncate">
+                                数据结构与算法
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex flex-col">
+                            <div className="text-xs text-gray-500 font-medium mb-1.5">进阶知识</div>
+                            <div className="flex flex-col space-y-1.5">
+                              <div className="bg-orange-50 dark:bg-orange-900/10 text-[10px] py-1 px-1.5 rounded border border-orange-200 dark:border-orange-800/30 truncate">
+                                机器学习理论
+                              </div>
+                              <div className="bg-orange-50 dark:bg-orange-900/10 text-[10px] py-1 px-1.5 rounded border border-orange-200 dark:border-orange-800/30 truncate">
+                                深度学习框架
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex flex-col">
+                            <div className="text-xs text-gray-500 font-medium mb-1.5">专业技能</div>
+                            <div className="flex flex-col space-y-1.5">
+                              <div className="bg-red-50 dark:bg-red-900/10 text-[10px] py-1 px-1.5 rounded border border-red-200 dark:border-red-800/30 truncate">
+                                LLM应用开发
+                              </div>
+                              <div className="bg-red-50 dark:bg-red-900/10 text-[10px] py-1 px-1.5 rounded border border-red-200 dark:border-red-800/30 truncate">
+                                AI系统集成
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-3 pt-2 border-t border-gray-100 dark:border-gray-800">
+                  <div className="flex justify-between items-center">
+                    <div className="text-xs text-blue-600 font-medium">
+                      个性化学习路径推荐
+                    </div>
+                    <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                      已匹配 128 门课程
+                    </Badge>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            {/* 学习行为分析 */}
+            <Card className="md:col-span-12 lg:col-span-6 overflow-hidden border border-gray-100 dark:border-gray-800 shadow-md">
+              <CardHeader className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-950/40 dark:to-cyan-950/40 py-3 px-4">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-semibold">学习行为分析</h3>
+                  <div className="text-xs px-2 py-1 rounded-md font-medium bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300">
+                    近6个月
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-3 pb-4 px-4">
+                <div className="h-64 w-full relative">
+                  {/* 学习行为分析可视化 */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-sky-500/5 to-cyan-500/5 rounded-lg p-3">
+                    <div className="h-full flex flex-col">
+                      <div className="flex-1 flex space-x-4">
+                        <div className="w-1/2 flex flex-col items-center justify-center space-y-1">
+                          {/* 完课率圆环 */}
+                          <div className="relative w-32 h-32 flex items-center justify-center">
+                            <div className="absolute w-full h-full rounded-full border-[10px] border-gray-200 dark:border-gray-700"></div>
+                            <div className="absolute w-full h-full rounded-full border-[10px] border-t-blue-500 border-r-blue-500 border-b-transparent border-l-transparent transform rotate-45"></div>
+                            <div className="text-blue-600 font-bold text-2xl">76%</div>
+                          </div>
+                          <div className="text-xs text-center">
+                            <span className="font-medium">完课率</span><br/>
+                            <span className="text-gray-500 text-[10px]">高于行业均值15%</span>
+                          </div>
+                        </div>
+                        
+                        <div className="w-1/2">
+                          {/* 学习时段分布图 */}
+                          <div className="text-xs text-gray-500 mb-1 text-center">学习时段分布</div>
+                          <div className="space-y-2">
+                            <div className="flex items-center text-xs">
+                              <div className="w-16 text-right mr-2">早晨 (6-9点)</div>
+                              <div className="flex-1 h-3 bg-gray-100 dark:bg-gray-800 rounded-full">
+                                <div className="h-full rounded-full bg-blue-400" style={{width: '15%'}}></div>
+                              </div>
+                              <div className="w-8 text-right ml-2">15%</div>
+                            </div>
+                            <div className="flex items-center text-xs">
+                              <div className="w-16 text-right mr-2">上午 (9-12点)</div>
+                              <div className="flex-1 h-3 bg-gray-100 dark:bg-gray-800 rounded-full">
+                                <div className="h-full rounded-full bg-blue-400" style={{width: '10%'}}></div>
+                              </div>
+                              <div className="w-8 text-right ml-2">10%</div>
+                            </div>
+                            <div className="flex items-center text-xs">
+                              <div className="w-16 text-right mr-2">下午 (12-18点)</div>
+                              <div className="flex-1 h-3 bg-gray-100 dark:bg-gray-800 rounded-full">
+                                <div className="h-full rounded-full bg-blue-400" style={{width: '20%'}}></div>
+                              </div>
+                              <div className="w-8 text-right ml-2">20%</div>
+                            </div>
+                            <div className="flex items-center text-xs">
+                              <div className="w-16 text-right mr-2">晚上 (18-22点)</div>
+                              <div className="flex-1 h-3 bg-gray-100 dark:bg-gray-800 rounded-full">
+                                <div className="h-full rounded-full bg-blue-400" style={{width: '45%'}}></div>
+                              </div>
+                              <div className="w-8 text-right ml-2">45%</div>
+                            </div>
+                            <div className="flex items-center text-xs">
+                              <div className="w-16 text-right mr-2">深夜 (22-6点)</div>
+                              <div className="flex-1 h-3 bg-gray-100 dark:bg-gray-800 rounded-full">
+                                <div className="h-full rounded-full bg-blue-400" style={{width: '10%'}}></div>
+                              </div>
+                              <div className="w-8 text-right ml-2">10%</div>
+                            </div>
+                          </div>
+                          
+                          <div className="mt-4 text-center">
+                            <div className="font-medium text-sm text-cyan-500">24.5小时</div>
+                            <div className="text-xs text-gray-500">平均周学习时长</div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="h-6 flex space-x-2 mt-3">
+                        <div className="flex-1 bg-blue-50 dark:bg-blue-900/10 rounded-sm flex items-center justify-center">
+                          <div className="text-xs">专注力得分：<span className="text-blue-600 font-medium">8.6/10</span></div>
+                        </div>
+                        <div className="flex-1 bg-green-50 dark:bg-green-900/10 rounded-sm flex items-center justify-center">
+                          <div className="text-xs">笔记量：<span className="text-green-600 font-medium">24条/周</span></div>
+                        </div>
+                        <div className="flex-1 bg-purple-50 dark:bg-purple-900/10 rounded-sm flex items-center justify-center">
+                          <div className="text-xs">互动量：<span className="text-purple-600 font-medium">15次/周</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-3 grid grid-cols-3 gap-2">
+                  <div className="border rounded-lg p-2 text-center">
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">专注指数</p>
+                    <p className="text-lg font-bold text-blue-600">8.6/10</p>
+                    <p className="text-xs text-green-600">高于平均</p>
+                  </div>
+                  <div className="border rounded-lg p-2 text-center">
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">已获证书</p>
+                    <p className="text-lg font-bold text-blue-600">5</p>
+                    <p className="text-xs text-green-600">同比↑ 2</p>
+                  </div>
+                  <div className="border rounded-lg p-2 text-center">
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">技能增长</p>
+                    <p className="text-lg font-bold text-blue-600">+38%</p>
+                    <p className="text-xs text-blue-600">深度学习领域</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* 课程评价与反馈 */}
+            <Card className="md:col-span-12 lg:col-span-6 overflow-hidden border border-gray-100 dark:border-gray-800 shadow-md">
+              <CardHeader className="bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-950/40 dark:to-purple-950/40 py-3 px-4">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-semibold">课程评价与社区反馈</h3>
+                  <div className="text-xs px-2 py-1 rounded-md font-medium bg-violet-50 dark:bg-violet-950/40 text-violet-700 dark:text-violet-300">
+                    最新反馈
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-3 pb-4 px-4">
+                <div className="h-64 w-full relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-violet-500/5 via-purple-500/5 to-pink-500/5 rounded-lg p-4">
+                    <div className="h-full flex flex-col">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center">
+                          <div className="flex">
+                            {[...Array(5)].map((_, i) => (
+                              <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                            ))}
+                          </div>
+                          <span className="ml-2 text-sm font-medium">4.8/5.0</span>
+                        </div>
+                        <span className="text-xs text-gray-500">基于1,234条评价</span>
+                      </div>
+                      
+                      <div className="space-y-4 overflow-y-auto pr-1" style={{ maxHeight: "calc(100% - 30px)" }}>
+                        <div className="bg-white dark:bg-gray-800/60 rounded-lg p-3 shadow-sm">
+                          <div className="flex justify-between mb-1">
+                            <div className="flex items-center">
+                              <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs font-medium mr-2">L</div>
+                              <span className="font-medium text-sm">李同学</span>
+                            </div>
+                            <div className="flex">
+                              {[...Array(5)].map((_, i) => (
+                                <Star key={i} className={`h-3 w-3 ${i < 5 ? "fill-amber-400 text-amber-400" : "text-gray-300"}`} />
+                              ))}
+                            </div>
+                          </div>
+                          <p className="text-xs text-gray-600 dark:text-gray-300">课程内容非常丰富，实践项目贴近工作场景，讲师解释清晰。我学完后成功转岗到AI工程师岗位，感谢平台提供的优质课程！</p>
+                          <div className="mt-2 text-[10px] text-gray-500">《大语言模型应用开发实战》· 2024.06.05</div>
+                        </div>
+                        
+                        <div className="bg-white dark:bg-gray-800/60 rounded-lg p-3 shadow-sm">
+                          <div className="flex justify-between mb-1">
+                            <div className="flex items-center">
+                              <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-xs font-medium mr-2">Z</div>
+                              <span className="font-medium text-sm">张同学</span>
+                            </div>
+                            <div className="flex">
+                              {[...Array(5)].map((_, i) => (
+                                <Star key={i} className={`h-3 w-3 ${i < 4 ? "fill-amber-400 text-amber-400" : "text-gray-300"}`} />
+                              ))}
+                            </div>
+                          </div>
+                          <p className="text-xs text-gray-600 dark:text-gray-300">课程节奏适中，从基础到进阶逐步深入，非常适合我这样的转行人员。作业反馈及时，社区讨论也很活跃。</p>
+                          <div className="mt-2 text-[10px] text-gray-500">《云原生应用架构与实践》· 2024.05.28</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-3 flex justify-between items-center">
+                  <div className="text-xs text-violet-600 font-medium">
+                    用户满意度评分
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    4.8分，位列AI开发类课程前5%
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+          
+          {/* AI驱动的课程推荐系统 - 减少内部间距和留白 */}
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40 rounded-xl border border-blue-100 dark:border-blue-800/30 shadow-md p-5 mt-8 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full -mr-20 -mt-20 blur-2xl"></div>
+            <div className="absolute bottom-0 left-0 w-80 h-80 bg-indigo-500/10 rounded-full -ml-20 -mb-20 blur-2xl"></div>
+            <div className="relative z-10">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 mb-5">
+                <div>
+                  <h2 className="text-2xl font-bold flex items-center">
+                    <Sliders className="h-6 w-6 mr-2 text-blue-500" />
+                    智能课程匹配引擎
+                  </h2>
+                  <p className="text-gray-600 dark:text-gray-400 mt-1">
+                    基于深度学习的个性化推荐，为你精准匹配职业发展所需课程
+                  </p>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Button variant="outline" className="rounded-lg border-blue-300 dark:border-blue-700">
+                    <User className="h-4 w-4 mr-1.5" />
+                    定制偏好
+                  </Button>
+                  <Button className="rounded-lg bg-blue-600 hover:bg-blue-700">
+                    <Layers className="h-4 w-4 mr-1.5" />
+                    立即匹配
+                  </Button>
+                </div>
+              </div>
+              
+              <div className="flex flex-col lg:flex-row gap-5">
+                <div className="lg:w-2/3 space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                    <div className="bg-white dark:bg-gray-900 rounded-lg p-3 border border-gray-100 dark:border-gray-800 shadow-sm">
+                      <div className="flex justify-between items-start mb-2">
+                        <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/40">
+                          <User className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                        </div>
+                        <Badge variant="outline" className="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800/60">
+                          个人偏好
+                        </Badge>
+                      </div>
+                      <h4 className="font-medium mb-1.5">个人学习档案</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        分析你的学习历史、完课率和效果评估，优化推荐模型
+                      </p>
+                    </div>
+                    <div className="bg-white dark:bg-gray-900 rounded-lg p-3 border border-gray-100 dark:border-gray-800 shadow-sm">
+                      <div className="flex justify-between items-start mb-2">
+                        <div className="p-2 rounded-lg bg-green-100 dark:bg-green-900/40">
+                          <BarChart className="h-5 w-5 text-green-600 dark:text-green-400" />
+                        </div>
+                        <Badge variant="outline" className="bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border-green-200 dark:border-green-800/60">
+                          市场数据
+                        </Badge>
+                      </div>
+                      <h4 className="font-medium mb-1.5">行业需求分析</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        整合求职市场数据和薪资水平，确定最具价值的技能课程
+                      </p>
+                    </div>
+                    <div className="bg-white dark:bg-gray-900 rounded-lg p-3 border border-gray-100 dark:border-gray-800 shadow-sm">
+                      <div className="flex justify-between items-start mb-2">
+                        <div className="p-2 rounded-lg bg-purple-100 dark:bg-purple-900/40">
+                          <Sliders className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                        </div>
+                        <Badge variant="outline" className="bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-400 border-purple-200 dark:border-purple-800/60">
+                          趋势预测
+                        </Badge>
+                      </div>
+                      <h4 className="font-medium mb-1.5">技术趋势预测</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        预测未来6-12个月技术热点，提前布局高增长潜力领域
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white dark:bg-gray-900 rounded-lg p-3 border border-gray-100 dark:border-gray-800 shadow-sm">
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="font-medium">技能知识图谱</h4>
+                      <Button variant="ghost" size="sm" className="h-7 rounded-lg text-xs">
+                        <span>全局视图</span>
+                        <ChevronDown className="h-3.5 w-3.5 ml-1" />
+                      </Button>
+                    </div>
+                    <div className="h-44 rounded-lg bg-gray-50 dark:bg-gray-800/50 flex items-center justify-center">
+                      <div className="text-center text-gray-400 dark:text-gray-500">
+                        <div className="flex items-center justify-center gap-6 relative">
+                          <div className="w-20 h-20 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center border-2 border-blue-300 dark:border-blue-700">
+                            <span className="text-sm font-medium text-blue-700 dark:text-blue-400">核心技能</span>
+                          </div>
+                          <div className="w-16 h-16 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center border-2 border-purple-300 dark:border-purple-700">
+                            <span className="text-xs font-medium text-purple-700 dark:text-purple-400">辅助技能</span>
+                          </div>
+                          <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center border-2 border-green-300 dark:border-green-700">
+                            <span className="text-xs font-medium text-green-700 dark:text-green-400">工具</span>
+                          </div>
+                          <div className="absolute left-20 right-0 top-10 border-t-2 border-dashed border-gray-300 dark:border-gray-700"></div>
+                        </div>
+                        <p className="mt-5 text-sm">[完整知识图谱将在此渲染]</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="lg:w-1/3 bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 shadow-sm p-4">
+                  <h4 className="font-medium mb-3">个性化推荐摘要</h4>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3 pb-3 border-b border-gray-100 dark:border-gray-800">
+                      <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center flex-shrink-0">
+                        <Flame className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                      </div>
+                      <div>
+                        <h5 className="font-medium text-sm">当前热门技能</h5>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                          大语言模型应用开发、多模态AI、向量数据库集成开发
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3 pb-3 border-b border-gray-100 dark:border-gray-800">
+                      <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/40 flex items-center justify-center flex-shrink-0">
+                        <User className="h-5 w-5 text-green-600 dark:text-green-400" />
+                      </div>
+                      <div>
+                        <h5 className="font-medium text-sm">适合你的学习路径</h5>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                          基于你的Python基础，建议学习进阶AI框架和部署实践课程
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center flex-shrink-0">
+                        <BarChart className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                      </div>
+                      <div>
+                        <h5 className="font-medium text-sm">就业机会增长率</h5>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                          AI应用工程师需求增长87%，薪资中位数¥35K，竞争指数中等
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <Button className="w-full rounded-lg mt-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
+                    查看完整推荐报告
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   )
@@ -1394,9 +2272,11 @@ interface ChevronLeftProps {
 }
 
 function ChevronLeft(props: ChevronLeftProps) {
+  const { className, ...rest } = props;
   return (
     <svg
-      {...props}
+      {...rest}
+      className={className}
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
