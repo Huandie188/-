@@ -9,7 +9,7 @@ import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
-import { Settings, Play, Pause, RotateCcw, Volume2, Clock, CheckCircle, ListTodo, Coffee, Plus, ChevronRight, AlertCircle } from "lucide-react"
+import { Settings, Play, Pause, RotateCcw, Volume2, Clock, CheckCircle, ListTodo, Coffee, Plus, ChevronRight, AlertCircle, Book } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { Separator } from "@/components/ui/separator"
@@ -262,8 +262,11 @@ export default function PomodoroPage() {
             <Link href="/courses" className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
               在线课程
             </Link>
-            <Link href="/pomodoro" className="transition-colors hover:text-primary-600 py-1 border-b-2 border-primary-500 text-primary-600">
+            <Link href="/pomodoro" className="transition-colors text-primary-600 py-1 border-b-2 border-primary-500">
               <Clock className="inline-block mr-1 h-4 w-4" /> 番茄钟
+            </Link>
+            <Link href="/vocabulary" className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
+              <Book className="inline-block mr-1 h-4 w-4" /> 背单词
             </Link>
             {process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL ? (
               <Link href={process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL} className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
@@ -281,6 +284,11 @@ export default function PomodoroPage() {
             {!isLoading && (
               isLoggedIn ? (
                 <>
+                  <Link href="/vocabulary" className="md:hidden">
+                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary-50 text-primary-700">
+                      <Book className="h-5 w-5" />
+                    </Button>
+                  </Link>
                   <Link href="/pomodoro" className="md:hidden">
                     <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary-50 text-primary-700">
                       <Clock className="h-5 w-5" />
@@ -295,6 +303,11 @@ export default function PomodoroPage() {
                 </>
               ) : (
                 <>
+                  <Link href="/vocabulary" className="md:hidden">
+                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary-50 text-primary-700">
+                      <Book className="h-5 w-5" />
+                    </Button>
+                  </Link>
                   <Link href="/pomodoro" className="md:hidden">
                     <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary-50 text-primary-700">
                       <Clock className="h-5 w-5" />

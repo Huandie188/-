@@ -9,7 +9,7 @@ import {
   TrendingUp, Zap, UserPlus, GitBranch,
   PlusCircle, Compass, Award, FileText,
   BrainCircuit, Trophy, BookOpen, Rocket,
-  Loader2, AlertCircle
+  Loader2, AlertCircle, Book
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -78,8 +78,11 @@ export default function CommunityPage() {
             <Link href="/courses" className="transition-colors hover:text-primary-400 py-1 border-b-2 border-transparent hover:border-primary-400">
               在线课程
             </Link>
-            <Link href="/pomodoro" className="transition-colors hover:text-primary-400 py-1 border-b-2 border-transparent hover:border-primary-400">
+            <Link href="/pomodoro" className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
               <Clock className="inline-block mr-1 h-4 w-4" /> 番茄钟
+            </Link>
+            <Link href="/vocabulary" className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
+              <Book className="inline-block mr-1 h-4 w-4" /> 背单词
             </Link>
             {process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL ? (
               <Link href={process.env.NEXT_PUBLIC_CS_LEARNING_PATH_URL} className="transition-colors hover:text-primary-400 py-1 border-b-2 border-transparent hover:border-primary-400">
@@ -98,6 +101,11 @@ export default function CommunityPage() {
             <Link href="/pomodoro" className="md:hidden">
               <Button variant="ghost" size="icon" className="rounded-full text-gray-400 hover:text-white">
                 <Clock className="h-5 w-5" />
+              </Button>
+            </Link>
+            <Link href="/vocabulary" className="md:hidden">
+              <Button variant="ghost" size="icon" className="rounded-full text-gray-400 hover:text-white">
+                <Book className="h-5 w-5" />
               </Button>
             </Link>
             <Button variant="ghost" size="icon" className="rounded-full text-gray-400 hover:text-white">
