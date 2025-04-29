@@ -153,6 +153,9 @@ export default function DataDashboard() {
   const [insightText, setInsightText] = useState(generateInsight(null));
   const [currentInsightIndex, setCurrentInsightIndex] = useState(0);
   
+  // 添加时间状态，使用客户端更新
+  const [currentTime, setCurrentTime] = useState('');
+  
   // 固定的洞察数据集
   const fixedInsights = [
     {
@@ -255,6 +258,19 @@ export default function DataDashboard() {
     };
   }, []);
 
+  // 在客户端更新时间
+  useEffect(() => {
+    // 初始设置时间
+    setCurrentTime(new Date().toLocaleString('zh-CN', { hour12: false }));
+    
+    // 每秒更新时间
+    const timeInterval = setInterval(() => {
+      setCurrentTime(new Date().toLocaleString('zh-CN', { hour12: false }));
+    }, 1000);
+    
+    return () => clearInterval(timeInterval);
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100">
       {/* 背景装饰 */}
@@ -267,10 +283,10 @@ export default function DataDashboard() {
     
       {/* 顶部导航条 */}
       <header className="fixed top-0 z-50 w-full border-b border-slate-800 bg-slate-900/80 backdrop-blur-lg">
-        <div className="container flex h-10 items-center px-2">
+        <div className="container flex h-8 items-center px-2">
           <Link href="/" className="flex items-center space-x-2 mr-4">
-            <img src="/5.png" alt="EduFusion" className="h-6 w-6" />
-            <span className="text-base font-bold tracking-tight bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">EduFusion</span>
+            <img src="/5.png" alt="EduFusion" className="h-5 w-5" />
+            <span className="text-sm font-bold tracking-tight bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">EduFusion</span>
           </Link>
           <nav className="hidden md:flex items-center space-x-4 text-xs font-medium flex-1 justify-center">
             <Link href="/" className="transition-colors hover:text-blue-400 py-1 border-b-2 border-transparent hover:border-blue-500">
@@ -282,8 +298,8 @@ export default function DataDashboard() {
           </nav>
           <div className="flex items-center gap-2 w-[120px] justify-end">
             <Link href="/">
-              <Button variant="ghost" size="icon" className="rounded-full h-7 w-7 hover:bg-slate-800 text-slate-400 hover:text-blue-400">
-                <ArrowLeft className="h-4 w-4" />
+              <Button variant="ghost" size="icon" className="rounded-full h-6 w-6 hover:bg-slate-800 text-slate-400 hover:text-blue-400">
+                <ArrowLeft className="h-3 w-3" />
                 <span className="sr-only">返回首页</span>
               </Button>
             </Link>
@@ -291,34 +307,44 @@ export default function DataDashboard() {
         </div>
       </header>
       
-      <main className="container max-w-screen-2xl pt-12 pb-3 relative z-10 px-2">
+      {/* 醒目的返回主页按钮 - 左上角固定位置 */}
+      <div className="fixed top-10 left-3 z-40">
+        <Link href="/">
+          <Button className="bg-blue-600 hover:bg-blue-500 text-white rounded-full shadow-lg shadow-blue-600/20 flex items-center gap-1 pl-1.5 pr-2.5 border border-blue-500 py-0.5 h-6">
+            <ArrowLeft className="h-3 w-3" />
+            <span className="text-[10px] font-medium">返回主页</span>
+          </Button>
+        </Link>
+      </div>
+      
+      <main className="container max-w-screen-2xl pt-10 pb-1 relative z-10 px-1.5">
         {/* 页面标题和时间 */}
-        <div className="mb-2 flex justify-center items-center">
+        <div className="mb-1 flex justify-center items-center">
           <div className="text-center">
-            <h1 className="text-xl font-bold tracking-tight bg-gradient-to-r from-blue-400 via-violet-400 to-emerald-400 bg-clip-text text-transparent">
-              教育数据可视化分析平台
+            <h1 className="text-lg font-bold tracking-tight bg-gradient-to-r from-blue-400 via-violet-400 to-emerald-400 bg-clip-text text-transparent">
+              数据分析平台
             </h1>
-            <div className="flex flex-row items-center justify-center text-xs text-slate-400 mt-0.5">
-              <span>实时数据监控与教育趋势分析</span>
-              <div className="h-3 w-px bg-slate-700 mx-3"></div>
-              <span>数据更新时间: {new Date().toLocaleString('zh-CN', { hour12: false })}</span>
+            <div className="flex flex-row items-center justify-center text-[10px] text-slate-400 mt-0.5">
+              <span>AI·可视化·决策支持</span>
+              <div className="h-2.5 w-px bg-slate-700 mx-2"></div>
+              <span>{currentTime}</span>
             </div>
           </div>
         </div>
         
         {/* 总数据量 - 圆形指标 */}
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mb-2">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-1.5 mb-1.5">
           <CircleStats title="发帖量" value={260} color="cyan" />
           <CircleStats title="数据量" value={12408} color="blue" />
           <CircleStats title="参与人数" value={13131} color="indigo" />
           <div className="hidden sm:block sm:col-span-2 bg-slate-800/80 border border-slate-700/50 rounded-lg overflow-hidden">
-            <div className="h-full p-2 flex flex-col justify-between">
-              <div className="flex items-center gap-1.5 mb-1">
-                <Database className="h-3.5 w-3.5 text-cyan-400" />
+            <div className="h-full p-1.5 flex flex-col justify-between">
+              <div className="flex items-center gap-1.5 mb-0.5">
+                <Database className="h-3 w-3 text-cyan-400" />
                 <span className="text-xs font-medium text-white">平台数据摘要</span>
               </div>
               
-              <div className="grid grid-cols-2 gap-x-3 gap-y-1.5 mt-1">
+              <div className="grid grid-cols-2 gap-x-3 gap-y-1 mt-0.5">
                 <div className="flex flex-col">
                   <div className="text-[10px] text-slate-400">系统状态</div>
                   <div className="flex items-center gap-1">
@@ -349,35 +375,35 @@ export default function DataDashboard() {
                 </div>
               </div>
               
-              <div className="mt-1 pt-1 border-t border-slate-700/50 flex justify-between items-center">
-                <div className="text-[10px] text-slate-400">上次更新: 今天 12:35</div>
-                <div className="text-[10px] px-1.5 py-0.5 rounded bg-slate-700/70 text-cyan-300">v2.4.1</div>
+              <div className="mt-0.5 pt-0.5 border-t border-slate-700/50 flex justify-between items-center">
+                <div className="text-[9px] text-slate-400">上次更新: 12:35</div>
+                <div className="text-[9px] px-1 py-0.5 rounded bg-slate-700/70 text-cyan-300">v2.4.1</div>
               </div>
             </div>
           </div>
         </div>
         
         {/* 主内容：左侧热词云+中国地图+右侧指标 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-2 mb-2">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-1.5 mb-1.5">
           {/* 左侧：热词云 */}
-          <div className="md:col-span-1 lg:col-span-3 h-[350px]">
+          <div className="md:col-span-1 lg:col-span-3 h-[280px]">
             <HotwordCloud />
           </div>
           
           {/* 中间：中国地图 */}
-          <div className="md:col-span-1 lg:col-span-6 h-[350px] border border-slate-700/50 rounded-lg overflow-hidden relative">
-            <div className="absolute top-0 left-0 right-0 flex items-center justify-between p-2 border-b border-slate-700/30 bg-slate-800/30">
-              <div className="flex items-center gap-1.5">
-                <Globe className="h-4 w-4 text-cyan-400" />
-                <span className="text-sm font-medium text-white">地图数据</span>
+          <div className="md:col-span-1 lg:col-span-6 h-[280px] border border-slate-700/50 rounded-lg overflow-hidden relative">
+            <div className="absolute top-0 left-0 right-0 flex items-center justify-between p-1.5 border-b border-slate-700/30 bg-slate-800/30">
+              <div className="flex items-center gap-1">
+                <Globe className="h-3.5 w-3.5 text-cyan-400" />
+                <span className="text-xs font-medium text-white">整体舆情数据</span>
               </div>
-              <div className="flex items-center text-xs gap-3">
+              <div className="flex items-center text-[10px] gap-2">
                 <div className="flex items-center gap-1">
-                  <div className="w-2 h-2 bg-cyan-500 rounded-full"></div>
+                  <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full"></div>
                   <span className="text-slate-400">活跃用户</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
+                  <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full"></div>
                   <span className="text-slate-400">数据流向</span>
                 </div>
               </div>
@@ -394,16 +420,16 @@ export default function DataDashboard() {
               />
               
               {/* 装饰性连接线 */}
-              <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-cyan-500/30"></div>
-              <div className="absolute bottom-0 left-0 w-16 h-16 border-b-2 border-l-2 border-cyan-500/30"></div>
+              <div className="absolute top-0 right-0 w-12 h-12 border-t-2 border-r-2 border-cyan-500/30"></div>
+              <div className="absolute bottom-0 left-0 w-12 h-12 border-b-2 border-l-2 border-cyan-500/30"></div>
             </div>
           </div>
           
           {/* 右侧：实时热度+用户数 */}
-          <div className="md:col-span-1 lg:col-span-3 grid grid-rows-2 gap-2 h-[350px]">
+          <div className="md:col-span-1 lg:col-span-3 grid grid-rows-2 gap-1.5 h-[280px]">
             <div className="row-span-1">
               <DataCard title="实时热度" icon={TrendingUp} color="from-red-500 to-orange-500">
-                <div className="h-36 px-0.5">
+                <div className="h-[120px] px-0.5">
                   <svg viewBox="0 0 400 150" className="w-full h-full overflow-visible">
                     <defs>
                       <linearGradient id="realTimeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -500,25 +526,25 @@ export default function DataDashboard() {
         </div>
         
         {/* 底部区域：地区发帖数、学习热点、AI洞察 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-1.5">
           {/* 发帖用户区域分布 */}
-          <div className="lg:col-span-5 h-[260px]">
+          <div className="lg:col-span-5 h-[220px]">
             <RegionBarChart />
           </div>
           
           {/* AI数据洞察 */}
-          <div className="lg:col-span-3 h-[260px]">
+          <div className="lg:col-span-3 h-[220px]">
             <DataCard title="AI数据洞察" icon={BrainCircuit} color="from-violet-500 to-purple-700" className="h-full">
               <div 
                 ref={insightContainerRef}
-                className="space-y-2 h-[200px] pr-1 overflow-hidden"
+                className="space-y-1.5 h-[170px] pr-1 overflow-hidden"
               >
-                <div className="p-2 bg-slate-700/50 rounded-md border border-slate-700/70 animate-pulse-slow">
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <div className="w-1 h-4 bg-gradient-to-b from-blue-400 to-violet-500 rounded-sm"></div>
-                    <span className="text-xs font-medium text-violet-300">AI实时预测</span>
+                <div className="p-1.5 bg-slate-700/50 rounded-md border border-slate-700/70 animate-pulse-slow">
+                  <div className="flex items-center gap-1 mb-0.5">
+                    <div className="w-1 h-3.5 bg-gradient-to-b from-blue-400 to-violet-500 rounded-sm"></div>
+                    <span className="text-[10px] font-medium text-violet-300">AI实时预测</span>
                   </div>
-                  <p className="text-xs text-slate-300">{insightText}</p>
+                  <p className="text-[10px] text-slate-300">{insightText}</p>
                 </div>
                 
                 {fixedInsights.map((insight, index) => {
@@ -540,18 +566,18 @@ export default function DataDashboard() {
                   return (
                     <div 
                       key={index}
-                      className={`p-2 ${bgClass} rounded-md border ${borderClass} transition-all duration-300 relative 
+                      className={`p-1.5 ${bgClass} rounded-md border ${borderClass} transition-all duration-300 relative 
                                 ${isActive ? 'transform scale-[1.02] ring-1 ring-white/20 z-10' : 'opacity-85'}`}
                     >
-                      <div className="flex gap-1.5 items-start">
-                        <span className={`text-sm leading-none ${isActive ? 'animate-pulse' : ''}`}>{insight.icon}</span>
-                        <p className={`text-xs ${textClass}`}>
+                      <div className="flex gap-1 items-start">
+                        <span className={`text-xs leading-none ${isActive ? 'animate-pulse' : ''}`}>{insight.icon}</span>
+                        <p className={`text-[10px] ${textClass}`}>
                           {insight.text}
                         </p>
                       </div>
                       {isActive && (
                         <div className="absolute right-1 top-1 animate-pulse">
-                          <div className="w-1.5 h-1.5 rounded-full bg-white/30"></div>
+                          <div className="w-1 h-1 rounded-full bg-white/30"></div>
                         </div>
                       )}
                     </div>
@@ -562,9 +588,9 @@ export default function DataDashboard() {
           </div>
           
           {/* 热门技能排行 */}
-          <div className="lg:col-span-4 h-[260px]">
+          <div className="lg:col-span-4 h-[220px]">
             <DataCard title="热门技能榜单" icon={Award} color="from-blue-500 to-sky-700" className="h-full">
-              <div className="grid grid-cols-2 gap-1.5 overflow-auto h-[200px] pr-1">
+              <div className="grid grid-cols-2 gap-1 overflow-auto h-[170px] pr-1">
                 {[
                   { name: "大语言模型", percentage: 92, color: "bg-blue-500", animate: "animate-pulse" },
                   { name: "AI应用开发", percentage: 87, color: "bg-violet-500" },
@@ -575,13 +601,13 @@ export default function DataDashboard() {
                   { name: "数据分析", percentage: 54, color: "bg-teal-500" },
                   { name: "UI/UX设计", percentage: 49, color: "bg-fuchsia-500", animate: "animate-pulse" },
                 ].map((skill, index) => (
-                  <div key={index} className="bg-slate-800 border border-slate-700 rounded-md p-1.5 relative overflow-hidden">
-                    <div className={`absolute bottom-0 left-0 h-1 ${skill.color} ${skill.animate || ''}`} style={{ width: `${skill.percentage}%` }}></div>
+                  <div key={index} className="bg-slate-800 border border-slate-700 rounded-md p-1 relative overflow-hidden">
+                    <div className={`absolute bottom-0 left-0 h-0.5 ${skill.color} ${skill.animate || ''}`} style={{ width: `${skill.percentage}%` }}></div>
                     <div className="flex justify-between items-center mb-0.5">
-                      <p className="font-medium text-xs text-white">{skill.name}</p>
-                      <span className="text-xs font-medium text-slate-400">{skill.percentage}%</span>
+                      <p className="font-medium text-[10px] text-white">{skill.name}</p>
+                      <span className="text-[10px] font-medium text-slate-400">{skill.percentage}%</span>
                     </div>
-                    <div className="text-[10px] text-slate-500">兴趣热度</div>
+                    <div className="text-[8px] text-slate-500">兴趣热度</div>
                   </div>
                 ))}
               </div>
@@ -590,10 +616,10 @@ export default function DataDashboard() {
         </div>
         
         {/* 数据大屏信息标签 */}
-        <div className="flex justify-between mt-1 items-center text-xs text-slate-500">
+        <div className="flex justify-between mt-0.5 items-center text-[9px] text-slate-500">
           <div>© 2024 EduFusion 教育数据平台 v2.4.1</div>
           <div className="flex items-center gap-1">
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+            <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse"></div>
             <span>数据实时更新中</span>
           </div>
         </div>

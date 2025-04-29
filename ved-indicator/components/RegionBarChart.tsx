@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // 地区数据
 const regionData = [
@@ -13,9 +13,13 @@ const regionData = [
 ];
 
 export function RegionBarChart() {
-  // 直接使用固定值而不是动画效果
   const maxValue = Math.max(...regionData.map(item => item.value));
+  const minValue = Math.min(...regionData.map(item => item.value));
   const [selectedBar, setSelectedBar] = useState<number | null>(null);
+
+  // 计算最大和最小高度（像素）- 减小最大高度确保底部文字可见
+  const maxHeight = 100; // 最高柱子的高度（像素）- 从150减少到100
+  const minHeight = 25;  // 最低柱子的高度（像素）- 从35减少到25
   
   return (
     <div className="relative w-full h-full rounded-lg overflow-hidden border border-slate-700/70 bg-slate-800/60">
@@ -28,7 +32,7 @@ export function RegionBarChart() {
       </div>
       
       {/* 标题 */}
-      <div className="h-10 flex justify-between items-center px-3 border-b border-slate-700/60 z-20 relative">
+      <div className="h-8 flex justify-between items-center px-3 border-b border-slate-700/60 z-20 relative">
         <div className="flex items-center gap-2">
           <div className="w-1.5 h-4 bg-blue-500 rounded-sm"></div>
           <span className="text-sm font-medium text-white">发帖用户数</span>
@@ -36,71 +40,84 @@ export function RegionBarChart() {
       </div>
       
       {/* 图表内容 */}
-      <div className="pt-6 px-4 pb-10 h-[calc(100%-40px)] flex flex-col">
-        {/* 数据显示区域 */}
-        <div className="flex h-48 items-end justify-between gap-2 mb-10 relative">
-          {/* 背景网格线 - 水平 */}
-          <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
-            {[0, 1, 2, 3, 4].map((i) => (
-              <div key={i} className="w-full h-px bg-slate-700/30"></div>
-            ))}
-          </div>
-          
-          {/* 柱状图 */}
+      <div className="h-[calc(100%-32px)] flex flex-col px-4 py-2">
+        {/* 最大值和最小值标注 */}
+        <div className="flex justify-between text-xs text-slate-400 mb-2">
+          <div>最高: {maxValue}</div>
+          <div>最低: {minValue}</div>
+        </div>
+        
+        {/* 柱状图显示区域 - 调整高度比例，并确保底部有空间显示文字 */}
+        <div className="flex-1 flex items-end justify-between px-2" style={{height: 'calc(100% - 70px)'}}>
           {regionData.map((item, index) => {
-            // 调整百分比计算，让较小的值也有明显的高度
-            // 使用60%作为最小高度，100%作为最大高度
-            const percentage = 60 + (item.value / maxValue) * 40;
+            // 计算具体高度（像素）- 线性映射从最小值到最大值
+            const ratio = (item.value - minValue) / (maxValue - minValue);
+            const height = Math.round(minHeight + ratio * (maxHeight - minHeight));
             const isActive = index === selectedBar;
             
             return (
               <div 
                 key={index}
-                className="relative flex flex-col items-center group"
-                style={{ width: `calc(100% / ${regionData.length})` }}
+                className="flex flex-col items-center group"
                 onMouseEnter={() => setSelectedBar(index)}
                 onMouseLeave={() => setSelectedBar(null)}
               >
                 {/* 值标签 */}
-                <div className={`absolute -top-6 text-center text-xs font-medium transition-all duration-300 ${isActive ? 'text-blue-300' : 'text-slate-400'}`}>
+                <div className={`text-center mb-1 text-xs font-medium ${isActive ? 'text-blue-300' : 'text-slate-400'}`}>
                   {item.value}
                 </div>
                 
-                {/* 柱条 */}
+                {/* 柱条 - 直接使用固定像素高度 */}
                 <div 
-                  className={`w-8 relative rounded-t-md overflow-hidden ${isActive ? 'z-10' : ''}`}
+                  className={`w-12 rounded-t-md ${isActive ? 'ring-1 ring-blue-400 z-10' : 'opacity-90'}`}
                   style={{ 
-                    height: `${percentage}%`,
-                    minHeight: '20px',
+                    height: `${height}px`,
+                    background: isActive 
+                      ? 'linear-gradient(to top, #1e40af, #3b82f6)' 
+                      : 'linear-gradient(to top, #1e40af, #60a5fa)',
                     transition: 'all 0.3s ease-out',
                   }}
                 >
-                  {/* 柱条背景 */}
-                  <div 
-                    className={`absolute inset-0 ${isActive ? 'bg-blue-500' : 'bg-blue-600/80'} transition-colors duration-300`}
-                  >
-                    {/* 高亮动画 */}
-                    {isActive && (
-                      <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/30 to-transparent animate-pulse"></div>
-                    )}
-                  </div>
-                </div>
-                
-                {/* 地区名称 */}
-                <div className={`mt-2 text-xs font-medium ${isActive ? 'text-blue-300' : 'text-slate-400'} transition-colors duration-300`}>
-                  {item.name}
+                  {/* 高亮效果 */}
+                  {isActive && (
+                    <div className="w-full h-full bg-gradient-to-t from-transparent via-white/10 to-transparent animate-pulse"></div>
+                  )}
                 </div>
               </div>
             );
           })}
         </div>
         
-        {/* 底部刻度线 */}
-        <div className="h-px w-full bg-gradient-to-r from-blue-900/30 via-blue-500/50 to-blue-900/30"></div>
+        {/* 地区名称区域 - 独立出来确保可见 */}
+        <div className="h-16 flex justify-between px-2 mt-1">
+          {regionData.map((item, index) => {
+            const isActive = index === selectedBar;
+            return (
+              <div key={index} className="flex flex-col items-center">
+                {/* 地区名称 */}
+                <div className={`text-xs font-medium ${isActive ? 'text-blue-300' : 'text-slate-400'}`}>
+                  {item.name}
+                </div>
+                
+                {/* 百分比 */}
+                <div className="text-[10px] text-slate-500 mt-0.5">
+                  {Math.round((item.value / maxValue) * 100)}%
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        
+        {/* 底部刻度线和图例 */}
+        <div className="mt-1 pt-1 border-t border-slate-700/30">
+          <div className="flex justify-center text-xs text-slate-400">
+            <div className="flex items-center gap-2">
+              <div className="w-12 h-1.5 bg-gradient-to-r from-blue-800 to-blue-500 rounded-full"></div>
+              <span>{minValue} - {maxValue}</span>
+            </div>
+          </div>
+        </div>
       </div>
-      
-      {/* 装饰性网格背景 */}
-      <div className="absolute inset-0 bg-grid-dot-pattern opacity-10 pointer-events-none"></div>
     </div>
   );
 } 
