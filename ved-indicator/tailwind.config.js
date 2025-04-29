@@ -89,6 +89,24 @@ module.exports = {
         'pulse-ring': 'pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'shimmer': 'shimmer 2.5s infinite linear',
         'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        "spin-slow": "spin 8s linear infinite",
+        "spin-slow-reverse": "spin-reverse 8s linear infinite",
+        "pulse-subtle": "pulse 3s infinite",
+        "wave": "wave 8s ease-in-out infinite",
+        "wave-reverse": "wave-reverse 8s ease-in-out infinite",
+        "float": "float 6s ease-in-out infinite",
+        "shine": "shine 2s linear infinite",
+        "scan": "scan 3s linear infinite",
+        "sweep": "sweep 3s ease-in-out infinite",
+        "blink": "blink 4s ease-in-out infinite",
+        "rotate-360": "rotate-360 30s linear infinite",
+        "data-flow": "data-flow 10s linear infinite",
+        "bounce-subtle": "bounce-subtle 5s ease-in-out infinite",
+        "radar-scan": "radar-scan 3s linear infinite",
+        "glitch": "glitch 4s step-end infinite",
+        "matrix-fall": "matrix-fall 15s linear infinite",
+        "ripple": "ripple 2s cubic-bezier(0, 0.2, 0.8, 1) infinite",
+        "dash": "dash 1.5s ease-in-out infinite",
       },
       keyframes: {
         gradient: {
@@ -114,6 +132,74 @@ module.exports = {
           '0%': { backgroundPosition: '-200% 0' },
           '100%': { backgroundPosition: '200% 0' },
         },
+        "spin-reverse": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(-360deg)" },
+        },
+        "wave": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-15px)" },
+        },
+        "wave-reverse": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(15px)" },
+        },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-20px)" },
+        },
+        "shine": {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
+        "scan": {
+          "0%": { transform: "translateY(-100%)" },
+          "100%": { transform: "translateY(100%)" }
+        },
+        "sweep": {
+          "0%": { transform: "translateY(-100%)" },
+          "50%": { transform: "translateY(100%)" },
+          "50.01%": { transform: "translateY(-100%)" },
+          "100%": { transform: "translateY(-100%)" }
+        },
+        "blink": {
+          "0%, 25%, 75%, 100%": { opacity: 1 },
+          "50%": { opacity: 0.5 }
+        },
+        "rotate-360": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" }
+        },
+        "data-flow": {
+          "0%": { strokeDashoffset: 1000 },
+          "100%": { strokeDashoffset: 0 }
+        },
+        "bounce-subtle": {
+          "0%, 100%": { transform: "translateY(0) scale(1)" },
+          "50%": { transform: "translateY(-5px) scale(1.02)" }
+        },
+        "radar-scan": {
+          "0%": { transform: "rotate(0deg)", opacity: 0 },
+          "50%": { opacity: 1 },
+          "100%": { transform: "rotate(360deg)", opacity: 0 }
+        },
+        "glitch": {
+          "0%, 5%, 10%, 15%, 50%, 55%, 60%, 65%, 90%, 95%, 100%": { transform: "translate(0)" },
+          "2.5%, 7.5%, 12.5%, 52.5%, 57.5%, 62.5%, 92.5%, 97.5%": { transform: "translate(-4px, 0)" },
+          "52.5%, 57.5%, 62.5%, 92.5%, 97.5%": { transform: "translate(4px, 0)" }
+        },
+        "matrix-fall": {
+          "0%": { transform: "translateY(-100%)" },
+          "100%": { transform: "translateY(100%)" }
+        },
+        "ripple": {
+          "0%": { transform: "scale(0)", opacity: 1 },
+          "100%": { transform: "scale(4)", opacity: 0 }
+        },
+        "dash": {
+          "0%": { strokeDashoffset: 1000 },
+          "100%": { strokeDashoffset: 0 }
+        }
       },
       backgroundImage: {
         'gradient-dots': 'radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 0)',

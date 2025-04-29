@@ -90,6 +90,9 @@ export default function Home() {
             <Link href="/courses" className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
               在线课程
             </Link>
+            <Link href="/dashboard" className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
+              数据大屏
+            </Link>
             <Link href="/pomodoro" className="transition-colors hover:text-primary-600 py-1 border-b-2 border-transparent hover:border-primary-500">
               <Clock className="inline-block mr-1 h-4 w-4" /> 番茄钟
             </Link>
